@@ -60,6 +60,12 @@
 - Saved review screenshots under ignored `tmp/ui-review/`. This is browser rendering/navigation QA, not validation of unbuilt features or a full manual accessibility audit.
 - Recorded the redesign in one additional local commit on feature/foundation. No remote push or deployment; the preview server/browser used for review were stopped afterward.
 
+## 8. Reference palette refinement
+- Abbas requested that buttons and accents follow the reference's light blue scheme while retaining the rest of its palette.
+- Centralized the action palette in CSS variables: cornflower blue selected navigation, pale blue buttons/hover states and blue outlines/icons. Kept the white/pale surfaces, soft semantic icon colors and blue-purple anatomy canvas.
+- Used dark blue text on light/blue controls to preserve readable contrast. This is a CSS-only change; no layout or feature behavior changes.
+- Validation: action text/background contrast checked numerically (above 4.5:1 for selected navigation and 6:1 for pale blue buttons); production build passed. No feature tests added for this CSS-only adjustment.
+
 ## Proposed changes
 - Accepted by Abbas's reference request: use the light anatomy-centered dashboard instead of the original dark sidebar shell. Keep the original stack, data and three-part feature split.
 
