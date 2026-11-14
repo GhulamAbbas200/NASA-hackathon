@@ -1,5 +1,7 @@
 # Part 1 — Check-in and Sources/About
 
+**Current status:** implemented locally under Abbas's later authorization to complete all parts together. See `docs/PROGRESS.md` for the authoritative status/validation. The owner/branch workflow below records the original team split.
+
 Owner: Teammate 1. Branch: `feature/part-1-checkin`.
 
 Read `docs/HANDOFF.md` completely, then this file, `docs/BUILD_LOG.md`, and `docs/CONTRACT.md`. This task is the authorized feature scope; the handoff's older four-task layout is superseded by this three-part split.

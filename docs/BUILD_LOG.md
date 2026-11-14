@@ -74,6 +74,31 @@
 - Verified saved preference across reloads, system-theme defaults, theme continuity across all five routes, and operation with blocked storage; health records were unchanged and no runtime exceptions were observed. Main card/button text pairs exceed 4.5:1 contrast in both modes.
 - Inspected desktop dark/mobile light screenshots in ignored `tmp/ui-review/`. Fixed partially visible mobile links by scrolling focused links fully into the navigation bar. Preview uses its own port/profile and is stopped after review.
 
+## 10. Complete-app scope authorized
+- Abbas requested completion of the other feature parts and a done/remaining tracker. This supersedes the previous foundation-only stop and per-person ownership restrictions for this implementation pass.
+- Abbas chose complete local implementation and testing; deployment is explicitly deferred.
+- Created `docs/PROGRESS.md` as the main work checklist/activity record. Retain this build log for decisions and the source ledger for evidence gaps.
+
+## 11. Integrated feature implementation
+- Implemented check-in parsing/field validation, same-date editing, explicit simulated/observed provenance, all optional device fields, per-item source/help, local save and explicit confirmed reset. No blank device reading becomes zero.
+- Added date-based in-app reminders using the existing schedule/config; no exact measurement time exists in the contract, and device/radiation cadence stays mission-plan-only.
+- Implemented source-linked guidance, real Recharts trends with missing-value gaps and dated table alternatives, summary flags with text/icons, region mini trends and expanded details.
+- Implemented the emergency graph with per-step citations and verification notes, history/back/restart/exit and continuing-care handoff. No new clinical algorithm or amounts were invented.
+- Implemented selectable anatomy hotspots, actual react-body-map front/back models, controlled region selection, equivalent keyboard buttons, chest Emergency links and a separate dosimeter-only radiation panel.
+- Added an environment selector. Conceptual environments retain visible history but block unconfigured new measurements and show their unverified schedule/escalation text.
+- Implemented About with all source entries, indicator help, OSDR scope and the bundled original third-party/MIT notices. Added regression tests for input parsing, provenance, optional values, upsert integration and reminder cadence.
+- Contract additions: optional `BodyMapProps.selectedRegion` keeps App/model selection consistent; optional `TrendChartProps.compact` enables region trends. User authorization covers all former owners; numerical/data contracts remain unchanged.
+
+## 12. Complete-app validation and delivery
+- `npm test`: 27 passing tests, including the seven new parser/provenance/optional-input/upsert/reminder regressions. `npm run build`: TypeScript and production bundling pass.
+- Added a reproducible disposable-profile browser harness. All 13 flow groups pass: real SVG/hotspot/keyboard selection, input/save/upsert/provenance, optional device validation, live trends, quota/corruption/reset handling, conceptual environments, every emergency branch, sources/licences, themes/responsiveness and already-loaded offline emergency use.
+- Verified five viewport widths (1440, 1024, 768, 390, 320px) in both themes, keyboard-reachable navigation, persistent Emergency access and no horizontal page overflow. No runtime exceptions or console warnings/errors observed. Screenshots reviewed.
+- Removed the unused placeholder helper. Moved anatomy callouts off the face/torso, retained back-model selection on remount and kept help/source body text at 16px.
+- Region controls carry visible status symbols and accessible status labels as well as colour, using the same shared labels/symbols as status chips. Native keyboard selection is covered by the browser pass.
+- Split library chunks using the installed Vite 6/Rollup contract; React, charts and body-model modules remain static imports. Largest final chunk is about 378 kB; the earlier large-chunk warning is resolved.
+- Wrote `docs/DEMO_SCRIPT.md`, `docs/TESTING.md` and `docs/COMPLETE_APP_PR.md`; updated README/contracts and marked original team task documents historical. `docs/PROGRESS.md` now records local software completion and the separate remaining verification/deployment items.
+- Work is local on `feature/complete-app`; original `feature/foundation` remains available. Deployment is deferred as requested. No remote or publication was created.
+
 ## Proposed changes
 - Accepted by Abbas's reference request: use the light anatomy-centered dashboard instead of the original dark sidebar shell. Keep the original stack, data and three-part feature split.
 

@@ -1,5 +1,7 @@
 # Part 3 — Body map, integration, deployment and demo
 
+**Current status:** body map, integration and demo script implemented locally under Abbas's later authorization to complete all parts together. Deployment is deferred by his explicit choice. See `docs/PROGRESS.md`; the owner/branch workflow below records the original team split.
+
 Owner: Abbas. Branch: `feature/part-3-bodymap`.
 
 Read `docs/HANDOFF.md` completely, then this file, `docs/BUILD_LOG.md`, and `docs/CONTRACT.md`. The scaffold and eight stubs exist. Build only this part and integrate the other two via their props.

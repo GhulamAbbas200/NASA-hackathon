@@ -1,5 +1,7 @@
 # Part 2 — Dashboard, trends, guidance and Emergency UI
 
+**Current status:** implemented locally under Abbas's later authorization to complete all parts together. See `docs/PROGRESS.md` for the authoritative status/validation. The owner/branch workflow below records the original team split.
+
 Owner: Teammate 2. Branch: `feature/part-2-dashboard`.
 
 Read `docs/HANDOFF.md` completely, then this file, `docs/BUILD_LOG.md`, and `docs/CONTRACT.md`. Use the existing data contracts; build the views, not another rule engine or clinical protocol.

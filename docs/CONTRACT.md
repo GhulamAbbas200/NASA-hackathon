@@ -1,6 +1,6 @@
 # ASTRA shared contract
 
-The implementation is at repository root (no extra `astra/` directory). `docs/HANDOFF.md` is the supplied source of truth; the explicit foundation request supersedes its older four-task layout and unresolved deadline. Types/data/helpers are foundation-owned. Request changes in `docs/BUILD_LOG.md`, do not fork this contract inside components.
+The implementation is at repository root (no extra `astra/` directory). `docs/HANDOFF.md` is the supplied source of truth. Abbas subsequently authorized completion of all three feature parts together, superseding the foundation-only stop and owner restrictions. The app is implemented on `feature/complete-app`; deployment is deferred. `docs/PROGRESS.md` is the current done/remaining tracker. Coordinate shared contract changes in `docs/BUILD_LOG.md`, do not fork rules inside components.
 
 ## Check-ins and provenance
 
@@ -39,9 +39,9 @@ Dates are crew-local `YYYY-MM-DD`; one entry per date. Required discomfort keys 
 
 The browser implementation uses `astra.check-ins.v1` with `{version: 1, entries: CheckIn[]}`. Absent key returns cloned simulated seed entries. Save loads and upserts by date. Reset writes an empty envelope (never clears other keys), so refresh remains empty rather than re-seeding. Corruption/unknown versions fail visibly and are never silently replaced; explicit reset can recover. Blocked access/quota errors must not be shown as a successful save. A factory `createLocalStorage(getDriver, initialEntries?)` supports tests without touching the browser.
 
-App owns entries and passes the storage interface plus `onSaved` to CheckInForm. The form calls onSaved only after successful save/reset; App reloads and recomputes flags. App also refreshes on storage events. Five hash navigation links work without a routing dependency or server rewrites. Overview (`#dashboard`) is the default and composes the check-in, body-map and insight stubs in a light three-column workspace. Persistent Emergency access does not depend on records or flags.
+App owns entries, environment and selected region. It passes storage plus `onSaved` to CheckInForm; the form calls onSaved only after successful save/reset. App reloads and recomputes flags and also refreshes on storage events. Five hash links work without a routing dependency or server rewrites. Overview (`#dashboard`) is the default: crew/reminders on the left, interactive body navigation in the center, region insights on the right, then trends/guidance below. The full form has its own Check-in page. Persistent Emergency access does not depend on records or flags.
 
-The user-approved visual redesign adds foundation-owned `src/components/ui/Icon.tsx`, `FeaturePlaceholder.tsx` and `src/components/layout/AnatomyPreview.tsx`. The latter displays decorative art from `public/assets/astra-anatomy.png`, with no health overlay or interaction. Feature owners can replace their own placeholder markup while preserving exported props. Part 3 can adapt or replace the decorative canvas while integrating the actual map. Do not mistake the art for a selectable region model; provenance/prompt is in `docs/ANATOMY_ASSET.md`.
+The reference-led design uses `src/components/ui/Icon.tsx` and `src/components/layout/AnatomyPreview.tsx`. The latter is decorative art beside the check-in form. The implemented `BodyMap` uses the same art for labelled navigation hotspots and separately provides the real package front/back selectable drawings. The illustration is not a scan or diagnostic anatomy model; provenance/prompt is in `docs/ANATOMY_ASSET.md`. `BodyMapProps.selectedRegion?: Region` is an additive controlled-selection prop. `TrendChartProps.compact?: boolean` is an additive region-chart presentation option; existing callers remain compatible.
 
 ## Shared UI appearance
 
@@ -51,9 +51,9 @@ Foundation-owned `src/components/ui/ThemeToggle.tsx` updates the document's `dat
 
 ## Body package
 
-Pinned react-body-map 1.1.0 source and declarations were inspected. Its README is stale. `Body` takes `data`, `onBodyPartPress`, `side`, `scale`, `frontOnly`, `backOnly`, optional `colors`. `BodyPart` requires slug and color, with optional intensity/pathArray. `regionMap.ts` maps actual drawing slugs; both head paths exist. Unmapped abdomen/neck/hips are deliberately undefined. The SVG paths have mouse callbacks without keyboard semantics; Part 3 must provide labelled buttons for the six regions.
+Pinned react-body-map 1.1.0 source and declarations were inspected. Its README is stale. `Body` takes `data`, `onBodyPartPress`, `side`, `scale`, `frontOnly`, `backOnly`, optional `colors`. `BodyPart` requires slug and color, with optional intensity/pathArray. `regionMap.ts` maps actual drawing slugs; both head paths exist. Unmapped abdomen/neck/hips are deliberately undefined. The package paths have mouse callbacks without keyboard semantics; the implemented labelled region buttons offer equivalent native keyboard selection. Region colors summarize the highest comparable prototype flag and never measure local tissue health.
 
-`contracts.test.ts` checks source slugs against the installed drawing arrays, renders both package views and checks the adapter callback, without implementing the BodyMap feature.
+`contracts.test.ts` checks source slugs against the installed drawing arrays, renders both package views and checks the adapter callback. `scripts/browser-check.mjs` additionally exercises actual front/back clicks, anatomy hotspots, native keyboard selection and live region updates.
 
 ## Environments, reminders and emergency flow
 
@@ -61,6 +61,6 @@ Pinned react-body-map 1.1.0 source and declarations were inspected. Its README i
 
 `reminders` provides one schedule per indicator. Daily self-report is an ASTRA 24-hour product default, not NASA's monthly research protocol. Device and radiation entries have null intervals and use mission/equipment schedules. No notifications service.
 
-Emergency data is a directed graph with `EMERGENCY_START_STEP_ID`, `emergencySteps` and `emergencyStepById`. Every step has a section 14b citation and a section locator; answers reference step IDs. Empty answers mean handoff to continued mission care, never an all-clear or stop-CPR instruction. Explicit clinical-method gaps stay visible and are controlled by the mission checklist. Part 2 builds only the graph UI, not unsourced clinical content.
+Emergency data is a directed graph with `EMERGENCY_START_STEP_ID`, `emergencySteps` and `emergencyStepById`. Every step has a section 14b citation and a section locator; answers reference step IDs. The implemented UI uses those steps directly and supports back/restart/exit. Empty answers mean handoff to continued mission care, never an all-clear or stop-CPR instruction. Explicit clinical-method gaps stay visible and are controlled by the mission checklist. No unsourced clinical procedure was added.
 
 Always display: “Decision support only; follow your mission medical checklist and contact the ground flight surgeon.” Research sources are not medical certification. See `docs/RESEARCH_VERIFICATION.md` for the cross-check ledger and `THIRD_PARTY_NOTICES.md` for credits.
