@@ -1,8 +1,18 @@
 import type { Indicator } from '../types';
 import type { SourceReference } from '../data/sources';
-import FeaturePlaceholder from '../components/ui/FeaturePlaceholder';
+import { EMERGENCY_NOTICE } from '../data/emergency';
+import { RULE_NOTICE } from '../lib/rules';
+import thirdPartyNotices from '../../THIRD_PARTY_NOTICES.md?raw';
+import MetricHelp from '../components/ui/MetricHelp';
+import Icon from '../components/ui/Icon';
 
 export interface AboutProps { indicators: Indicator[]; sources: SourceReference[] }
-export default function About(_props: AboutProps) {
-  return <FeaturePlaceholder id="about-stub" title="Sources & project scope" name="About" icon="info" description="Add research sources, OSDR context, simulated-data information and MIT credits." />;
+export default function About({ indicators, sources }: AboutProps) {
+  return <div className="about-page stack">
+    <section className="panel"><div className="card-heading"><span className="card-icon"><Icon name="orbit" /></span><h2>ASTRA · crew health, with context</h2></div><p>A local prototype for recording daily observations, exploring changes from a personal baseline and finding source-backed guidance.</p><p><strong>{EMERGENCY_NOTICE}</strong></p><ul><li>Baseline: latest reading compared with seven preceding check-ins, excluding the latest.</li><li>Every amount is a <strong>{RULE_NOTICE}</strong>. Normal means no prototype flag, not medical clearance.</li><li>Demo records are <strong>simulated</strong>. They are not NASA astronaut measurements or OSDR records.</li><li>Records stay in this browser's localStorage; there is no account, backend sync or hardware connection. A loaded page works without API calls; a fresh offline visit is not guaranteed.</li><li>ISS is the primary configuration. Spacecraft and Moon base remain conceptual; their equipment, schedules and escalation details are unverified.</li></ul></section>
+    <section className="panel" aria-labelledby="sources-title"><h2 id="sources-title">Research sources</h2><p>Verification describes the claims checked in this prototype. It does not certify a medical protocol. Measurement instructions and action gaps marked TODO remain unverified.</p><div className="sources-list">{sources.map(source => <article key={source.url} className="source-item"><h3><a href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a></h3><span className={`verification-label verification-${source.verification}`}>{source.verification}</span><p>{source.note}</p></article>)}</div></section>
+    <section className="panel"><h2>OSDR: research inspiration</h2><p>NASA's linked rodent bone studies, including OSD-310 and OSD-351, provide research context for monitoring musculoskeletal risks. No OSDR data was imported into check-ins or used to validate the prototype alert rules. Full dataset metadata and reuse terms still require verification before analysis.</p><p>Radiation needs dosimetry. Symptom reports do not measure bone density, muscle loss or diagnose SANS. Body-region assignments are navigation choices.</p></section>
+    <section className="panel"><h2>Indicator reference</h2><p>Every question and device field has a plain-language measurement guide, research source and visible limits.</p><div className="indicator-reference">{indicators.map(indicator => <article key={indicator.id}><h3>{indicator.name}</h3><p className="small-text">{indicator.hazard} · {indicator.measurement}</p><MetricHelp indicator={indicator} /></article>)}</div></section>
+    <section className="panel"><h2>Artwork, packages & licences</h2><p>The central anatomy illustration was generated for this prototype. It is not a scan or a validated diagnostic image. Front/back region drawings use <a href="https://github.com/hashangit/react-body-map" target="_blank" rel="noreferrer">react-body-map 1.1.0</a> by Hashan Wickramasinghe (declares MIT), derived from react-native-body-highlighter. The original drawing notice is retained below.</p><details className="subtle-details"><summary>Read third-party credits and the MIT notice</summary><pre className="licence-notice">{thirdPartyNotices}</pre></details></section>
+  </div>;
 }
