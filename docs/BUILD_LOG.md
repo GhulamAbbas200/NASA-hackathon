@@ -33,8 +33,29 @@
 - The shell loads through the storage interface, exposes per-record simulation provenance, surfaces load failures without replacing stored data, and refreshes state after future saves and storage events.
 - ISS is fixed for now. The environment switch remains Part 3 work.
 
+## 5. Teammate handoff and contract verification
+- Wrote the three directly assignable task files with ownership, exact props/helpers, acceptance checklists, branch names, run commands and definition of done. Added `docs/CONTRACT.md`, README and a source-by-source verification ledger.
+- Added regression tests for seven-prior-entry math, missing data, persistent prototype flags, storage round-trip/corruption/quota/reset behavior, emergency graph citations/branches and actual package drawing slugs/rendering/callback.
+- Preserved the original drawing project's verified MIT notice and credited the wrapper. Wrapper package declares MIT but omits a standalone licence; extra copyright details remain unverified.
+- Initial production build succeeded. Final checks and dev-server smoke check in progress.
+
+## 6. Final verification and local delivery
+- `npm install` completed with the committed lockfile; the installation reported zero vulnerabilities. `npm test`: all 20 tests passed.
+- `npm run build` passed TypeScript and Vite production bundling, including the contract tests in type checking. Vite 6.4.6 runs with this machine's Node 22.15.0.
+- `npm run dev -- --host 127.0.0.1 --port 5173 --strictPort` started successfully; index, transformed App module and stylesheet each returned HTTP 200.
+- Fixed skip-link navigation during review so it does not reset the selected page. No browser-control tool is available; visual and real-browser interaction QA was not performed and is not claimed.
+- SHA-256 confirms the supplied handoff and docs/HANDOFF.md are identical. Added line-ending attributes for cross-platform teamwork.
+- Created small local commits on feature/foundation and prepared `docs/FOUNDATION_PR.md`. No remote was provided/configured; no push, remote PR or deployment is claimed. Deployment remains Part 3.
+- Stopped after the foundation: eight feature TODO stubs remain intentionally unimplemented.
+
 ## Proposed changes
 - None.
 
 ## Unverified items
-- Research cross-check, package slugs/API, current equipment and emergency content verification in progress.
+- TODO: verify current ISS equipment and approved device-specific measurement procedures (including body temperature and blood glucose).
+- TODO: verify per-indicator repeat/countermeasure/contact criteria; abbreviated daily scales and reminder cadence are ASTRA designs, not validated NASA protocols.
+- TODO: verify current mission emergency checklist, responsiveness/breathing branch methods, responsive chest-pain care, unsure-assessment handling, issued AED/restraints and post-event care. Existing flow is a sourced research prototype with explicit gaps.
+- TODO: verify inaccessible historical radiation PDF and lumbar ultrasound report if those detailed claims are needed. Neither is asserted as current evidence.
+- TODO: verify OSDR-310/351 full metadata and terms before analysis; NASA article confirms relevance only. No dataset analysis/import was performed.
+- TODO: verify additional exact react-body-map wrapper copyright notice (MIT declaration and original drawing notice retained).
+- Browser visual/interaction QA and final feature integration remain for the feature tasks. Automated and HTTP smoke results are recorded above.
