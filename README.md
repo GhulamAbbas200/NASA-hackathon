@@ -25,7 +25,7 @@ Start with [the handoff](docs/HANDOFF.md), [contract](docs/CONTRACT.md), [build 
 - [Part 2 — Dashboard and Emergency UI](docs/tasks/part-2-dashboard.md)
 - [Part 3 — Body map, integration and deploy](docs/tasks/part-3-bodymap.md)
 
-Five hash routes: Check-in, Dashboard, Body map, Emergency, About. Emergency access and the simulation notice are persistent in the shell. The environment is fixed to ISS until Part 3 adds the switch; spacecraft/Moon base configs are conceptual only.
+Five hash routes: Check-in, Dashboard (labelled Overview), Body map, Emergency, About. The default overview uses the reference-led light dashboard with a large central anatomy illustration. This is decorative art; actual region selection remains Part 3 work. Emergency access and the simulation notice are persistent in the shell. The environment is fixed to ISS until Part 3 adds the switch; spacecraft/Moon base configs are conceptual only.
 
 All demo entries are **simulated**, not NASA astronaut data or OSDR records. A missing storage key loads the simulated demo; reset writes an empty dataset that stays empty on reload. `Storage.save` upserts a date and can throw on invalid data or browser storage failures.
 

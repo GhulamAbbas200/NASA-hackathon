@@ -48,8 +48,20 @@
 - Created small local commits on feature/foundation and prepared `docs/FOUNDATION_PR.md`. No remote was provided/configured; no push, remote PR or deployment is claimed. Deployment remains Part 3.
 - Stopped after the foundation: eight feature TODO stubs remain intentionally unimplemented.
 
+## 7. Reference-led visual redesign
+- Abbas supplied a light medical-dashboard reference and requested a body-centered direction. This explicitly updates the earlier dark-space-theme preference.
+- Replaced the sidebar with top pill navigation and a three-column overview: crew context/check-in, a large anatomy canvas, and compact insight placeholders. Overview is now the default route; all five existing hashes remain supported.
+- Restyled all eight existing typed stubs with a shared presentation wrapper. Component props, ownership, storage and medical rules are unchanged; every feature remains a named TODO.
+- Used the built-in imagegen tool for an original transparent anatomy illustration. Saved it in `public/assets/astra-anatomy.png`; prompt/provenance is in `docs/ANATOMY_ASSET.md`. It is decorative and explicitly labelled; no health overlay, scan or interactive 3D model is claimed.
+- Preserved simulation labels, visible Emergency access, storage errors, keyboard focus and responsive single-column layout.
+- Validation: production build and all 20 existing contract tests passed. Inspected Chrome screenshots of the layout; a separate temporary browser profile was used, without touching the user's browser data.
+- Browser checks at 1440px, 390px and 320px confirmed no horizontal overflow, loaded anatomy image, all navigation links within the viewport, visible persistent Emergency access and simulation labels. Clicked through all five routes successfully; no runtime exceptions were observed.
+- Corrected mobile minimum-width constraints, removed automatic heading focus on first load (route changes still focus it), and kept the illustrated feet above the caption. Final production build rerun after these adjustments.
+- Saved review screenshots under ignored `tmp/ui-review/`. This is browser rendering/navigation QA, not validation of unbuilt features or a full manual accessibility audit.
+- Recorded the redesign in one additional local commit on feature/foundation. No remote push or deployment; the preview server/browser used for review were stopped afterward.
+
 ## Proposed changes
-- None.
+- Accepted by Abbas's reference request: use the light anatomy-centered dashboard instead of the original dark sidebar shell. Keep the original stack, data and three-part feature split.
 
 ## Unverified items
 - TODO: verify current ISS equipment and approved device-specific measurement procedures (including body temperature and blood glucose).

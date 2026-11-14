@@ -1,4 +1,5 @@
 import type { AppContextProps, IndicatorFlag, Region } from '../types';
+import FeaturePlaceholder from './ui/FeaturePlaceholder';
 
 export interface BodyMapProps extends AppContextProps {
   flags: IndicatorFlag[];
@@ -6,10 +7,5 @@ export interface BodyMapProps extends AppContextProps {
   onEmergency: () => void;
 }
 export default function BodyMap(_props: BodyMapProps) {
-  return <section className="panel" aria-labelledby="body-stub">
-    <span className="owner-label">Part 3 · Abbas</span>
-    <h2 id="body-stub">BodyMap</h2>
-    <p>TODO: Render front and back views, region selection and a separate dosimeter information panel.</p>
-    <p className="contract-hint">Verified API: Body data / onBodyPartPress · head-front / head-back exist</p>
-  </section>;
+  return <FeaturePlaceholder id="body-stub" title="Explore by region" name="BodyMap" icon="body" description="Connect the front/back body map, region selection and dosimeter information." />;
 }

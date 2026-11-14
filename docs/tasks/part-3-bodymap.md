@@ -13,6 +13,7 @@ Connect body regions to latest values, trends and sourced next actions; finish A
 - `src/components/BodyMap.tsx`
 - `src/components/RegionPanel.tsx`
 - `src/App.tsx`
+- `src/components/layout/AnatomyPreview.tsx` and `public/assets/astra-anatomy.png` (adapt the decorative reference-led canvas when integrating the actual map; do not claim the image itself has selectable regions)
 - `docs/DEMO_SCRIPT.md` (create in this part)
 - Deployment configuration, only as needed for Vercel/Netlify after integration.
 

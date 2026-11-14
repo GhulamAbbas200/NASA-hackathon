@@ -6,7 +6,7 @@ Base: `main` (the team repository's default branch). Head: `feature/foundation`.
 
 ## Description
 
-ASTRA now has a running React/TypeScript/Vite foundation with Tailwind's Vite setup, Recharts and the verified react-body-map package. The dark responsive shell links Check-in, Dashboard, Body map, Emergency and About, keeps Emergency access visible, and labels simulated records. All eight feature components remain typed TODO placeholders for the three assigned owners.
+ASTRA now has a running React/TypeScript/Vite foundation with Tailwind's Vite setup, Recharts and the verified react-body-map package. The reference-led light dashboard centers an original anatomy illustration between compact crew/context and insight panels. Top navigation links Check-in, Dashboard (Overview), Body map, Emergency and About, keeps Emergency access visible, and labels simulated records. All eight feature components remain typed TODO placeholders for the three assigned owners. The anatomy art is illustrative, not a scan, interactive 3D model or health overlay.
 
 Shared contracts cover indicators and sources, region slugs/click adapter, sourced emergency branches, ISS/conceptual environment configs, reminders, 14 simulated entries, versioned localStorage and seven-prior-entry baseline comparisons. Alert settings are centralized and explicitly labelled prototype rules, not medical thresholds. Storage errors and insufficient data stay explicit. No backend or deployment was added.
 
@@ -19,7 +19,7 @@ Three task files document ownership, exact props/helpers, acceptance criteria, b
 - `npm run build`: passes TypeScript and production bundling.
 - `npm run dev -- --host 127.0.0.1 --port 5173 --strictPort`: starts successfully; page, App module and stylesheet return HTTP 200.
 - Original handoff and docs/HANDOFF.md SHA-256 hashes match.
-- Browser visual/interaction QA not performed; no browser-control tool was available. Assigned parts include browser acceptance checks.
+- Reference-led shell checked in isolated headless Chrome at 1440px, 390px and 320px: anatomy image loads, navigation/Emergency/simulation labels are visible, no horizontal overflow, all five routes navigate, no observed runtime exceptions. Assigned parts still require their feature/browser acceptance checks and manual accessibility review.
 
 ## Review notes and limits
 

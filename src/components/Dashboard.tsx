@@ -2,15 +2,12 @@ import type { AppContextProps, IndicatorFlag } from '../types';
 import { indicatorById } from '../data/indicators';
 import TrendChart from './TrendChart';
 import GuidanceCard from './GuidanceCard';
+import FeaturePlaceholder from './ui/FeaturePlaceholder';
 
 export interface DashboardProps extends AppContextProps { flags: IndicatorFlag[]; onEmergency: () => void }
 export default function Dashboard({ entries, flags }: DashboardProps) {
   return <div className="stack">
-    <section className="panel" aria-labelledby="dashboard-stub">
-      <span className="owner-label">Part 2 · Teammate 2</span>
-      <h2 id="dashboard-stub">Dashboard</h2>
-      <p>TODO: Build status summaries with text and icons, and show baseline changes.</p>
-    </section>
+    <FeaturePlaceholder id="dashboard-stub" title="Health snapshot" name="Dashboard" icon="heart" description="Add status summaries and changes from your personal baseline." />
     <div className="panel-grid">
       <TrendChart entries={entries} indicator={indicatorById.sleepHours} />
       <GuidanceCard indicator={indicatorById.sleepHours} flag={flags.find(flag => flag.indicatorId === 'sleepHours')} />

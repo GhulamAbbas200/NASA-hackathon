@@ -39,7 +39,9 @@ Dates are crew-local `YYYY-MM-DD`; one entry per date. Required discomfort keys 
 
 The browser implementation uses `astra.check-ins.v1` with `{version: 1, entries: CheckIn[]}`. Absent key returns cloned simulated seed entries. Save loads and upserts by date. Reset writes an empty envelope (never clears other keys), so refresh remains empty rather than re-seeding. Corruption/unknown versions fail visibly and are never silently replaced; explicit reset can recover. Blocked access/quota errors must not be shown as a successful save. A factory `createLocalStorage(getDriver, initialEntries?)` supports tests without touching the browser.
 
-App owns entries and passes the storage interface plus `onSaved` to CheckInForm. The form calls onSaved only after successful save/reset; App reloads and recomputes flags. App also refreshes on storage events. Five hash navigation links work without a routing dependency or server rewrites. Persistent Emergency access does not depend on records or flags.
+App owns entries and passes the storage interface plus `onSaved` to CheckInForm. The form calls onSaved only after successful save/reset; App reloads and recomputes flags. App also refreshes on storage events. Five hash navigation links work without a routing dependency or server rewrites. Overview (`#dashboard`) is the default and composes the check-in, body-map and insight stubs in a light three-column workspace. Persistent Emergency access does not depend on records or flags.
+
+The user-approved visual redesign adds foundation-owned `src/components/ui/Icon.tsx`, `FeaturePlaceholder.tsx` and `src/components/layout/AnatomyPreview.tsx`. The latter displays decorative art from `public/assets/astra-anatomy.png`, with no health overlay or interaction. Feature owners can replace their own placeholder markup while preserving exported props. Part 3 can adapt or replace the decorative canvas while integrating the actual map. Do not mistake the art for a selectable region model; provenance/prompt is in `docs/ANATOMY_ASSET.md`.
 
 ## Body package
 
