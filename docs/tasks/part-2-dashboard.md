@@ -21,6 +21,8 @@ Use Tailwind utilities in your components and existing shared CSS. Keep default 
 
 ## Exact contract
 
+Preserve light/dark mode and the larger type scale in `src/theme.css`. Use its shared surface/text/accent CSS variables for your new UI, and check both themes at phone width. Do not shrink body text below 16px to fit a layout.
+
 - Types from `src/types.ts`: `CheckIn`, `Indicator`, `IndicatorId`, `IndicatorFlag`, `Status`, `Environment`, `EmergencyStep`, `EmergencyAnswer`.
 - `DashboardProps`: `entries: CheckIn[]`, `environment: Environment`, `flags: IndicatorFlag[]`, `onEmergency: () => void`.
 - `TrendChartProps`: `entries: CheckIn[]`, `indicator: Indicator`. Use installed Recharts 3; `react-is` matches React 18. Handle several chart instances with unique accessible IDs.

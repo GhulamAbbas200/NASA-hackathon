@@ -14,6 +14,8 @@ Three task files document ownership, exact props/helpers, acceptance criteria, b
 
 ## Validation
 
+Dark mode and larger typography: production build and isolated Chrome checks pass in both themes at five widths (320–1440px), including saved/system preferences, blocked storage, unchanged health records, keyboard navigation and computed text sizes/contrast. No runtime exceptions observed.
+
 - `npm install`: completed; lockfile committed, zero reported vulnerabilities at installation.
 - `npm test`: 20 passing tests covering baseline windows/missing values/persistence, storage round-trip/corruption/quota/reset, emergency graph/citations, and the installed body-map slugs/rendering/callback.
 - `npm run build`: passes TypeScript and production bundling.

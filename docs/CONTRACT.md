@@ -43,6 +43,12 @@ App owns entries and passes the storage interface plus `onSaved` to CheckInForm.
 
 The user-approved visual redesign adds foundation-owned `src/components/ui/Icon.tsx`, `FeaturePlaceholder.tsx` and `src/components/layout/AnatomyPreview.tsx`. The latter displays decorative art from `public/assets/astra-anatomy.png`, with no health overlay or interaction. Feature owners can replace their own placeholder markup while preserving exported props. Part 3 can adapt or replace the decorative canvas while integrating the actual map. Do not mistake the art for a selectable region model; provenance/prompt is in `docs/ANATOMY_ASSET.md`.
 
+## Shared UI appearance
+
+`src/theme.css` loads after `index.css`, defining readable typography and both theme surfaces. Use its `--surface-bg`, `--surface-subtle`, `--text-primary`, `--text-secondary`, `--text-muted`, `--border-color` and `--accent-*` variables when building the feature views, rather than hard-coding light surfaces. Main text is 16px, card headings 18px and supporting labels generally 14px.
+
+Foundation-owned `src/components/ui/ThemeToggle.tsx` updates the document's `data-theme` and remembers `astra.theme`, separately from check-in storage. `index.html` applies the saved choice (or initial system preference) before paint. A blocked preference write must not disable the current-session toggle. Feature owners preserve both modes and keyboard usability; mobile navigation scrolls within its own bar without shrinking text.
+
 ## Body package
 
 Pinned react-body-map 1.1.0 source and declarations were inspected. Its README is stale. `Body` takes `data`, `onBodyPartPress`, `side`, `scale`, `frontOnly`, `backOnly`, optional `colors`. `BodyPart` requires slug and color, with optional intensity/pathArray. `regionMap.ts` maps actual drawing slugs; both head paths exist. Unmapped abdomen/neck/hips are deliberately undefined. The SVG paths have mouse callbacks without keyboard semantics; Part 3 must provide labelled buttons for the six regions.

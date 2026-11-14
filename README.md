@@ -1,5 +1,7 @@
 # ASTRA
 
+Light and dark modes are available through the header sun/moon button. The app remembers your choice in this browser and otherwise starts with the system preference. Shared typography uses 16px body text, 18px card headings and generally 14px supporting labels.
+
 Foundation for a three-person NASA Space Apps health-monitoring prototype. React 18 + Vite + TypeScript + Tailwind's Vite plugin, Recharts 3 and react-body-map 1.1.0. Local browser storage only. **Feature views are typed TODO stubs**, intentionally left to the three assigned parts.
 
 Requires Node.js 22.12+ and npm. The implementation is at this repository root.

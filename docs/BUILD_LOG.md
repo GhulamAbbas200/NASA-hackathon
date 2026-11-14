@@ -66,6 +66,14 @@
 - Used dark blue text on light/blue controls to preserve readable contrast. This is a CSS-only change; no layout or feature behavior changes.
 - Validation: action text/background contrast checked numerically (above 4.5:1 for selected navigation and 6:1 for pale blue buttons); production build passed. No feature tests added for this CSS-only adjustment.
 
+## 9. Dark mode and larger type
+- Abbas requested dark mode and larger text throughout the app. Added a labelled header theme control, remembered separately as `astra.theme`; health-record reset does not affect it. First visit uses the system preference, and the saved theme is applied before paint.
+- Added shared light/dark surface and typography tokens in `src/theme.css`. Body/card text is now 16px, card titles 18px, supporting labels generally 14px and captions at least 12px. Light mode keeps the reference's blue action palette.
+- Adapted header/navigation and cards for the larger type. Mobile navigation scrolls within its own bar rather than shrinking the text; theme and Emergency controls remain available.
+- Validation: production build passed. Isolated Chrome checks passed in both themes at 1440, 1024, 768, 390 and 320px, including no page overflow, 16px body/18px card headings/14px footer, visible 44px theme/Emergency controls and keyboard-reachable navigation.
+- Verified saved preference across reloads, system-theme defaults, theme continuity across all five routes, and operation with blocked storage; health records were unchanged and no runtime exceptions were observed. Main card/button text pairs exceed 4.5:1 contrast in both modes.
+- Inspected desktop dark/mobile light screenshots in ignored `tmp/ui-review/`. Fixed partially visible mobile links by scrolling focused links fully into the navigation bar. Preview uses its own port/profile and is stopped after review.
+
 ## Proposed changes
 - Accepted by Abbas's reference request: use the light anatomy-centered dashboard instead of the original dark sidebar shell. Keep the original stack, data and three-part feature split.
 

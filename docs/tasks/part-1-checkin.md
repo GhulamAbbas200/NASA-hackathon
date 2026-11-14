@@ -19,6 +19,8 @@ Use Tailwind utilities inside these files; use existing shared CSS classes where
 
 ## Exact contract
 
+Preserve light/dark mode and the larger type scale in `src/theme.css`. Use its shared surface/text/accent CSS variables for your new UI, and check both themes at phone width. Do not shrink body text below 16px to fit a layout.
+
 - `CheckInFormProps`: `entries: CheckIn[]`, `environment: Environment`, `storage: Storage`, `onSaved: () => void`. Preserve the default export.
 - `CheckIn`, `Rating5`, `Symptom4`, `Discomfort10`, `Vitals`, `REGIONS`, `Region`, `Environment`, `Indicator`, `Storage` from `src/types.ts`.
 - `CheckIn.date`: valid `YYYY-MM-DD`, one record per crew-local day. Create it from local date parts, not UTC `toISOString()` for the current local day.

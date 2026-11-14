@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react';
 
-export type IconName = 'orbit' | 'activity' | 'checkin' | 'body' | 'heart' | 'shield' | 'info' | 'arrow' | 'clock' | 'alert' | 'trend';
+export type IconName = 'orbit' | 'activity' | 'checkin' | 'body' | 'heart' | 'shield' | 'info' | 'arrow' | 'clock' | 'alert' | 'trend' | 'sun' | 'moon';
 const paths: Record<IconName, ReactNode> = {
+  sun: <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" /></>,
+  moon: <path d="M20.5 13a8.5 8.5 0 0 1-9.5-9.5A8.5 8.5 0 1 0 20.5 13Z" />,
   orbit: <><circle cx="12" cy="12" r="3" /><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-40 12 12)" /><circle cx="18.5" cy="5.5" r="1.5" fill="currentColor" stroke="none" /></>,
   activity: <path d="M3 12h4l3-7 4 14 3-7h4" />,
   checkin: <><rect x="5" y="4" width="14" height="17" rx="3" /><path d="M9 4V2h6v2M9 12l2 2 4-4" /></>,

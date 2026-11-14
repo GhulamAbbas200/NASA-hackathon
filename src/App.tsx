@@ -16,6 +16,7 @@ import EmergencyMode from './components/EmergencyMode';
 import About from './pages/About';
 import AnatomyPreview from './components/layout/AnatomyPreview';
 import Icon, { type IconName } from './components/ui/Icon';
+import ThemeToggle from './components/ui/ThemeToggle';
 
 const navigation = [
   { id: 'dashboard', label: 'Overview', icon: 'activity', title: 'Crew health overview', subtitle: 'Your daily observations, connected to the bigger picture.' },
@@ -79,8 +80,8 @@ export default function App() {
     <a href="#main" className="skip-link">Skip to content</a>
     <header className="topbar">
       <a className="brand" href="#dashboard" aria-label="ASTRA overview"><span className="brand-mark"><Icon name="orbit" size={29} /></span><span>astra<span className="brand-period">.</span></span></a>
-      <nav aria-label="Main navigation">{navigation.map(item => <a key={item.id} href={'#' + item.id} aria-current={page === item.id ? 'page' : undefined}><Icon name={item.icon} size={16} /><span>{item.label}</span></a>)}</nav>
-      <div className="header-actions"><span className="mission-chip"><span aria-hidden="true" />ISS workspace</span><a href="#emergency" className="emergency-button"><Icon name="alert" size={16} />Emergency</a></div>
+      <nav aria-label="Main navigation">{navigation.map(item => <a key={item.id} href={'#' + item.id} aria-current={page === item.id ? 'page' : undefined} onFocus={event => event.currentTarget.scrollIntoView({ block: 'nearest', inline: 'nearest' })}><Icon name={item.icon} size={16} /><span>{item.label}</span></a>)}</nav>
+      <div className="header-actions"><ThemeToggle /><a href="#emergency" className="emergency-button" aria-label="Emergency"><Icon name="alert" size={19} /><span className="emergency-label">Emergency</span></a></div>
     </header>
     <main id="main" tabIndex={-1} className="main-content">
       <div className="breadcrumb"><span>Crew health</span><span aria-hidden="true">/</span><span>{active.label}</span><span className="workspace-caption"><Icon name="orbit" size={15} />{config.name}</span></div>
