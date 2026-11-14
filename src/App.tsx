@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { Region } from './types';
+import type { Environment, Region } from './types';
 import { indicators } from './data/indicators';
 import { SOURCES } from './data/sources';
 import { environments } from './data/environments';
@@ -17,6 +17,7 @@ import About from './pages/About';
 import AnatomyPreview from './components/layout/AnatomyPreview';
 import Icon, { type IconName } from './components/ui/Icon';
 import ThemeToggle from './components/ui/ThemeToggle';
+import MeasurementReminders from './components/MeasurementReminders';
 
 const navigation = [
   { id: 'dashboard', label: 'Overview', icon: 'activity', title: 'Crew health overview', subtitle: 'Your daily observations, connected to the bigger picture.' },
@@ -32,14 +33,14 @@ const loadRecords = () => {
   catch (error) { return { entries: [], error: error instanceof Error ? error.message : 'Could not load records.' }; }
 };
 
-/** Part 3 owns further integration and the future environment selector. */
+/** Integrated local app; all feature parts authorized by Abbas. */
 export default function App() {
   const [page, setPage] = useState<Page>(pageFromHash);
   const [records, setRecords] = useState(loadRecords);
   const [region, setRegion] = useState<Region>('head');
   const heading = useRef<HTMLHeadingElement>(null);
   const previousPage = useRef(page);
-  const environment = 'iss' as const;
+  const [environment, setEnvironment] = useState<Environment>('iss');
   const config = environments[environment];
   const active = navigation.find(item => item.id === page)!;
   const flags = useMemo(() => assessCheckIns(records.entries), [records.entries]);
@@ -62,12 +63,12 @@ export default function App() {
     return () => window.removeEventListener('storage', onStorage);
   }, []);
   const context = { entries: records.entries, environment };
-  const bodyProps = { ...context, flags, onSelectRegion: setRegion, onEmergency: openEmergency };
+  const bodyProps = { ...context, flags, selectedRegion: region, onSelectRegion: setRegion, onEmergency: openEmergency };
   const regionProps = { ...context, region, flags, onEmergency: openEmergency };
 
   const crewContext = <section className="panel crew-card" aria-labelledby="crew-context-title">
     <div className="crew-card-identity"><span className="crew-avatar"><Icon name="orbit" size={31} /></span><div><h2 id="crew-context-title">{hasSimulated ? 'Demo crew member' : 'Crew workspace'}</h2><p>{hasSimulated ? 'Simulated profile' : 'Local observations'}</p></div></div>
-    <div className="crew-context-line"><span>Environment</span><strong>ISS</strong></div>
+    <div className="crew-context-line"><span>Environment</span><strong>{environment === 'iss' ? 'ISS' : environment === 'spacecraft' ? 'Spacecraft' : 'Moon base'}</strong></div>
     <div className="crew-context-line"><span>Check-ins available</span><strong>{records.error ? 'Unavailable' : records.entries.length}</strong></div>
     <div className="crew-context-line"><span>Latest entry</span><strong>{latest?.date ?? 'No entries'}</strong></div>
     <div className="crew-card-bottom"><span className="small-orbit" aria-hidden="true" />{hasSimulated ? 'Simulated data workspace' : 'Stored in this browser'}</div>
@@ -84,19 +85,21 @@ export default function App() {
       <div className="header-actions"><ThemeToggle /><a href="#emergency" className="emergency-button" aria-label="Emergency"><Icon name="alert" size={19} /><span className="emergency-label">Emergency</span></a></div>
     </header>
     <main id="main" tabIndex={-1} className="main-content">
-      <div className="breadcrumb"><span>Crew health</span><span aria-hidden="true">/</span><span>{active.label}</span><span className="workspace-caption"><Icon name="orbit" size={15} />{config.name}</span></div>
-      <div className="page-heading"><div><h1 ref={heading} tabIndex={-1}>{active.title}</h1><p>{active.subtitle}</p></div><span className="foundation-badge">Foundation preview</span></div>
+      <div className="breadcrumb"><span>Crew health</span><span aria-hidden="true">/</span><span>{active.label}</span><label className="environment-control"><span>Environment</span><select aria-label="Environment" value={environment} onChange={event => setEnvironment(event.target.value as Environment)}><option value="iss">ISS</option><option value="spacecraft">Spacecraft · conceptual</option><option value="moonBase">Moon base · conceptual</option></select></label></div>
+      <div className="page-heading"><div><h1 ref={heading} tabIndex={-1}>{active.title}</h1><p>{active.subtitle}</p></div><span className="foundation-badge">Local prototype</span></div>
+      {config.conceptual && <div className="conceptual-notice" role="status"><strong>Conceptual environment.</strong> {config.equipmentNote} Historical check-ins remain visible; no new measurement schedule is assumed.<p>{config.escalationText}</p></div>}
       {records.error ? <div className="notice error-notice" role="alert"><Icon name="alert" /><div><strong>Storage unavailable</strong><p>{records.error}</p></div><button type="button" onClick={refresh}>Retry loading</button></div>
         : <div className="notice" role="status"><Icon name="info" size={17} /><span>{hasSimulated ? DEMO_DATA_LABEL : 'No simulated records loaded'}</span><span className="notice-count">{records.entries.length} check-ins</span></div>}
       {page === 'dashboard' && <div className="overview-grid">
-        <aside className="context-column" aria-label="Crew context and daily check-in">{crewContext}<CheckInForm {...context} storage={storage} onSaved={refresh} />{researchNote}</aside>
-        <div className="anatomy-column"><AnatomyPreview /><BodyMap {...bodyProps} /></div>
-        <aside className="insights-column" aria-label="Health overview placeholders"><Dashboard {...context} flags={flags} onEmergency={openEmergency} /><RegionPanel {...regionProps} /></aside>
+        <aside className="context-column" aria-label="Crew context and reminders">{crewContext}<MeasurementReminders {...context} />{researchNote}</aside>
+        <div className="anatomy-column"><BodyMap {...bodyProps} /></div>
+        <aside className="insights-column" aria-label="Selected region insights"><RegionPanel {...regionProps} /></aside>
+        <div className="overview-analysis"><div className="analysis-heading"><span className="stage-eyebrow">YOUR RECORDED OBSERVATIONS</span><h2>Trends & guidance</h2><p>Explore all indicators and their changes from your own baseline.</p></div><Dashboard {...context} flags={flags} onEmergency={openEmergency} /></div>
       </div>}
-      {page === 'body-map' && <div className="overview-grid"><aside className="context-column" aria-label="Crew context">{crewContext}{researchNote}</aside><div className="anatomy-column"><AnatomyPreview /><BodyMap {...bodyProps} /></div><aside className="insights-column" aria-label="Region insights"><RegionPanel {...regionProps} /></aside></div>}
-      {page === 'check-in' && <div className="detail-grid"><div className="stack">{crewContext}<CheckInForm {...context} storage={storage} onSaved={refresh} /></div><AnatomyPreview compact /></div>}
+      {page === 'body-map' && <div className="overview-grid"><aside className="context-column" aria-label="Crew context">{crewContext}{researchNote}</aside><div className="anatomy-column"><BodyMap {...bodyProps} /></div><aside className="insights-column" aria-label="Region insights"><RegionPanel {...regionProps} /></aside></div>}
+      {page === 'check-in' && <div className="checkin-layout"><CheckInForm {...context} storage={storage} onSaved={refresh} /><aside className="stack" aria-label="Reminders and anatomy illustration"><MeasurementReminders {...context} /><AnatomyPreview compact /></aside></div>}
       {page === 'emergency' && <div className="focused-page"><EmergencyMode environment={environment} steps={emergencySteps} onExit={() => { window.location.hash = 'dashboard'; }} /></div>}
-      {page === 'about' && <div className="detail-grid"><About indicators={indicators} sources={SOURCES} />{researchNote}</div>}
+      {page === 'about' && <About indicators={indicators} sources={SOURCES} />}
     </main>
     <footer><span className="footer-symbol"><Icon name="shield" size={17} /></span><div><p>{EMERGENCY_NOTICE}</p><p>All baseline flags: {RULE_NOTICE}.</p></div><span className="footer-brand">ASTRA <span>/</span> CREW HEALTH</span></footer>
   </div>;
