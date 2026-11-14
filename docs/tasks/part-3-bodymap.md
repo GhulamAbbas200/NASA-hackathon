@@ -25,7 +25,7 @@ Use Tailwind utilities and existing shared styles. Keep default exports. No serv
 
 ## Exact contract
 
-Preserve light/dark mode and the larger type scale in `src/theme.css`. Use its shared surface/text/accent CSS variables for your new UI, and check both themes at phone width. Do not shrink body text below 16px to fit a layout. Keep the header theme toggle and its independent `astra.theme` preference intact.
+Preserve light/dark mode and Abbas's type scale in `src/theme.css`: 18px body/inputs, 22px card headings, 17px navigation/buttons, 16px supporting text and 14–15px badges/chart labels. Use its shared surface/text/accent CSS variables, and check both themes at phone width. Do not shrink body text below 18px to fit a layout. Keep the header theme toggle and its independent `astra.theme` preference intact.
 
 - `Region`, `REGIONS`, `Status`, `Environment`, `CheckIn`, `Indicator`, `IndicatorFlag`, `EnvironmentConfig` from `src/types.ts`.
 - `BodyMapProps`: entries, environment, flags, `onSelectRegion: (region: Region) => void`, `onEmergency: () => void`.

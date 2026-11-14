@@ -45,7 +45,7 @@ The reference-led design uses `src/components/ui/Icon.tsx` and `src/components/l
 
 ## Shared UI appearance
 
-`src/theme.css` loads after `index.css`, defining readable typography and both theme surfaces. Use its `--surface-bg`, `--surface-subtle`, `--text-primary`, `--text-secondary`, `--text-muted`, `--border-color` and `--accent-*` variables when building the feature views, rather than hard-coding light surfaces. Main text is 16px, card headings 18px and supporting labels generally 14px.
+`src/theme.css` loads after `index.css`, defining readable typography and both theme surfaces. Use its `--surface-bg`, `--surface-subtle`, `--text-primary`, `--text-secondary`, `--text-muted`, `--border-color` and `--accent-*` variables when building the feature views, rather than hard-coding light surfaces. Abbas's requested scale is 18px body/inputs, 22px card headings, 17px navigation/buttons, 16px supporting text/footnotes, 14–15px badges/chart labels and 30–40px page titles. Shared font tokens preserve this scale without shrinking text at phone widths; chart axis ticks use 14px.
 
 Foundation-owned `src/components/ui/ThemeToggle.tsx` updates the document's `data-theme` and remembers `astra.theme`, separately from check-in storage. `index.html` applies the saved choice (or initial system preference) before paint. A blocked preference write must not disable the current-session toggle. Feature owners preserve both modes and keyboard usability; mobile navigation scrolls within its own bar without shrinking text.
 

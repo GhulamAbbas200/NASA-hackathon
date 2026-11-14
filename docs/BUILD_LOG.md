@@ -99,6 +99,11 @@
 - Wrote `docs/DEMO_SCRIPT.md`, `docs/TESTING.md` and `docs/COMPLETE_APP_PR.md`; updated README/contracts and marked original team task documents historical. `docs/PROGRESS.md` now records local software completion and the separate remaining verification/deployment items.
 - Work is local on `feature/complete-app`; original `feature/foundation` remains available. Deployment is deferred as requested. No remote or publication was created.
 
+## 13. Exact typography scale requested
+- Applied Abbas's requested sizes: 18px body/inputs, 22px card headings, 17px navigation/buttons, 16px supporting text/footnotes and 14–15px badges/chart labels. Page titles remain 30–40px; the root rem basis stays 16px so those title bounds do not shift.
+- Updated shared theme tokens and feature-specific overrides, including form help, tables, region units, source notes, model controls and chart axes. Increased axis spacing for larger tick text.
+- Validation: production build passed. Browser checked the exact computed sizes on all five pages in both themes at 1440, 1280, 1201, 1024, 768, 390 and 320px (14 layout combinations). No horizontal page overflow, header overlap or runtime exceptions observed. Screenshot/type reports are under ignored `tmp/ui-review/`; no medical/data behavior changed.
+
 ## Proposed changes
 - Accepted by Abbas's reference request: use the light anatomy-centered dashboard instead of the original dark sidebar shell. Keep the original stack, data and three-part feature split.
 

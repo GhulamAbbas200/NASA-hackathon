@@ -21,7 +21,7 @@ Use Tailwind utilities inside these files; use existing shared CSS classes where
 
 ## Exact contract
 
-Preserve light/dark mode and the larger type scale in `src/theme.css`. Use its shared surface/text/accent CSS variables for your new UI, and check both themes at phone width. Do not shrink body text below 16px to fit a layout.
+Preserve light/dark mode and Abbas's type scale in `src/theme.css`: 18px body/inputs, 22px card headings, 17px navigation/buttons, 16px supporting text and 14–15px badges/chart labels. Use its shared surface/text/accent CSS variables, and check both themes at phone width. Do not shrink body text below 18px to fit a layout.
 
 - `CheckInFormProps`: `entries: CheckIn[]`, `environment: Environment`, `storage: Storage`, `onSaved: () => void`. Preserve the default export.
 - `CheckIn`, `Rating5`, `Symptom4`, `Discomfort10`, `Vitals`, `REGIONS`, `Region`, `Environment`, `Indicator`, `Storage` from `src/types.ts`.

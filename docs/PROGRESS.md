@@ -31,6 +31,8 @@ This file is the primary checklist. `BUILD_LOG.md` retains architectural decisio
 
 ## Activity record
 
+- Typography updated to Abbas's explicit scale: 18px body/inputs, 22px card headings, 17px navigation/buttons, 16px supporting text/footnotes, 14–15px badges/chart labels. Page titles remain 30–40px. Production build passes; computed sizes and all-page layout verified at seven widths (320–1440px) in both themes, with no overflow, header overlap or runtime exceptions.
+
 - Foundation delivered on `feature/foundation`; latest existing commit `77cd6c9` adds persistent dark mode and readable typography.
 - New instruction: complete the previously assigned feature work and maintain this tracker. No backend or new clinical rules authorized/needed.
 - Working on `feature/complete-app`. All eight former feature stubs have implementations. Added shared input parsing/validation, date-based reminders, status display, measurement help and mini-trend utilities without altering numerical alert rules.

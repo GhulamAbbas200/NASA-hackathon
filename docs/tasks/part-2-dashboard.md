@@ -23,7 +23,7 @@ Use Tailwind utilities in your components and existing shared CSS. Keep default 
 
 ## Exact contract
 
-Preserve light/dark mode and the larger type scale in `src/theme.css`. Use its shared surface/text/accent CSS variables for your new UI, and check both themes at phone width. Do not shrink body text below 16px to fit a layout.
+Preserve light/dark mode and Abbas's type scale in `src/theme.css`: 18px body/inputs, 22px card headings, 17px navigation/buttons, 16px supporting text and 14–15px badges/chart labels. Use its shared surface/text/accent CSS variables, and check both themes at phone width. Do not shrink body text below 18px to fit a layout.
 
 - Types from `src/types.ts`: `CheckIn`, `Indicator`, `IndicatorId`, `IndicatorFlag`, `Status`, `Environment`, `EmergencyStep`, `EmergencyAnswer`.
 - `DashboardProps`: `entries: CheckIn[]`, `environment: Environment`, `flags: IndicatorFlag[]`, `onEmergency: () => void`.

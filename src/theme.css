@@ -11,10 +11,12 @@
   --text-primary: #292b3a;
   --text-secondary: #606678;
   --text-muted: #6b7284;
-  --font-body: 1rem;
-  --font-small: .875rem;
-  --font-caption: .8125rem;
-  --font-card-title: 1.125rem;
+  --font-body: 1.125rem;
+  --font-small: 1rem;
+  --font-caption: .875rem;
+  --font-card-title: 1.375rem;
+  --font-control: 1.0625rem;
+  --font-badge: .9375rem;
   font-size: 16px;
   color: var(--text-primary);
   background: var(--page-bg);
@@ -38,14 +40,15 @@
   --accent-border: #5274b7;
 }
 body { font-size: var(--font-body); background: radial-gradient(ellipse at 0 0, var(--page-glow), transparent 55%), var(--page-bg); }
+button { font-size: var(--font-control); }
 .app-shell { color: var(--text-primary); background: var(--shell-bg); border-color: var(--border-soft); }
 .topbar { grid-template-columns: auto minmax(0, 1fr) auto; border-color: var(--border-soft); }
 nav { justify-self: center; }
 .theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; white-space: nowrap; }
 .header-actions { gap: 10px; }
 .emergency-button { min-height: 44px; justify-content: center; }
-nav a { font-size: .9375rem; min-height: 44px; scroll-margin-inline: 6px; }
-.emergency-button, .theme-toggle { font-size: .9375rem; }
+nav a { font-size: var(--font-control); min-height: 44px; scroll-margin-inline: 6px; }
+.emergency-button, .theme-toggle { font-size: var(--font-control); }
 .breadcrumb, .workspace-caption, .foundation-badge, .notice, .crew-card-identity p, .crew-card-bottom { font-size: var(--font-small); }
 h1 { font-size: clamp(1.875rem, 2.7vw, 2.5rem); letter-spacing: -.04em; }
 .page-heading p { font-size: var(--font-body); max-width: none; }
@@ -56,9 +59,9 @@ h1 { font-size: clamp(1.875rem, 2.7vw, 2.5rem); letter-spacing: -.04em; }
 .crew-context-line { align-items: start; }
 .crew-context-line strong { flex-shrink: 0; }
 .research-note a, .emergency-panel .contract-hint { font-size: var(--font-small); }
-.stage-eyebrow, .illustration-badge, .stage-coordinate { font-size: .75rem; }
+.stage-eyebrow, .illustration-badge, .stage-coordinate { font-size: var(--font-caption); }
 .anatomy-stage-heading { flex-wrap: wrap; }
-.anatomy-stage-heading h2 { font-size: 1.625rem; }
+.anatomy-stage-heading h2 { font-size: var(--font-card-title); }
 .illustration-badge { max-width: none; }
 .anatomy-caption { align-items: start; background: #303a78d9; }
 .anatomy-caption strong { font-size: var(--font-body); }
@@ -66,7 +69,7 @@ h1 { font-size: clamp(1.875rem, 2.7vw, 2.5rem); letter-spacing: -.04em; }
 .anatomy-caption-icon { flex-shrink: 0; }
 .anatomy-image { height: calc(100% - 205px); margin-top: -15px; }
 footer { font-size: var(--font-small); }
-.footer-brand { font-size: .75rem; }
+.footer-brand { font-size: var(--font-small); }
 .page-heading > div { min-width: 0; }
 .foundation-badge { max-width: 140px; white-space: normal; text-align: center; flex-shrink: 0; }
 
@@ -113,7 +116,7 @@ footer { font-size: var(--font-small); }
 }
 @media (max-width: 700px) {
   nav { display: flex; overflow-x: auto; justify-self: stretch; justify-content: flex-start; width: 100%; max-width: 100%; padding: 5px; border-radius: 18px; }
-  nav a { flex-shrink: 0; font-size: .9375rem; padding: 10px 14px; }
+  nav a { flex-shrink: 0; font-size: var(--font-control); padding: 10px 14px; }
   .topbar { gap: 12px; }
   .theme-toggle-label { display: none; }
   .theme-toggle { width: 44px; padding: 10px; }
@@ -124,7 +127,7 @@ footer { font-size: var(--font-small); }
   .anatomy-stage-heading { top: 18px; left: 20px; right: 20px; }
   .anatomy-image { height: calc(100% - 215px); }
   .anatomy-caption { left: 16px; right: 16px; bottom: 16px; padding: 12px; }
-  .anatomy-caption strong { font-size: .9375rem; }
+  .anatomy-caption strong { font-size: var(--font-body); }
   .anatomy-caption p { font-size: var(--font-small); }
   .illustration-badge { white-space: nowrap; }
   footer { font-size: var(--font-small); }
