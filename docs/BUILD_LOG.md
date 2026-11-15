@@ -112,6 +112,12 @@
 - Added a dedicated browser check script for media and crew access, responsive layout and exact type sizes in both themes, reduced motion, fallback and modal reuse. No dependencies, numerical health rules, dashboard layout or backend added. Deployment remains deferred. Following review, Abbas authorized a local commit and merge into `main` with fresh regression checks; no remote push is requested.
 - Validation complete: all 27 automated tests and production build pass; all nine landing browser groups pass with no runtime exceptions. Checked five widths (320–1440px) in both themes, signup/login/PIN/returning-crew paths and modal keyboard behavior. A separate fresh browser confirmed bundled MP4/poster delivery and muted autoplay under normal browser policy. Inspected desktop/mobile screenshots; reports remain ignored under `tmp/ui-review/`.
 
+## 15. Landing merged into main and regression checked
+- Abbas reviewed the landing and requested a merge into `main`, followed by verification. Committed the reviewed work as `c64fdff` (`feat: add ISS video landing with shared crew login`) and fast-forward merged it into local `main` with no conflicts. No remote push or deployment.
+- Ran the 27 automated tests and TypeScript/Vite production build on merged `main`; both passed. Served that build locally and reran all nine landing groups in a disposable browser under the default autoplay policy; all passed.
+- Added an ignored merge smoke check covering per-crew form validation/save/update, record filter/details and reload persistence, dashboard chart updates, anatomy/front/back/region/radiation controls, emergency paths/restart/handoff/exit, and the five workspace routes at desktop/390/320px in both themes. All six groups passed with no horizontal page overflow or runtime exceptions. No app fixes were needed after the merge.
+- Recorded reports under ignored `tmp/ui-review/`; retained the reproducible landing script and original unit tests. User browser profiles and health records were untouched. Checkout remains on `main`.
+
 ## Proposed changes (historical)
 - Accepted by Abbas's reference request: use the light anatomy-centered dashboard instead of the original dark sidebar shell. Keep the original stack, data and three-part feature split.
 

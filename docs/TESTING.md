@@ -71,3 +71,9 @@ node scripts/landing-check.mjs
 The script checks actual video decoding/muted looping, pause/resume, the poster asset, first-profile registration, incorrect/correct PIN login, dashboard handoff, returning-crew actions, logout/persistence, theme persistence, five widths in both themes, exact requested fonts, mobile signup, reduced-motion loading/explicit-play/preference updates, blocked-video fallback and shared modal login/Escape/focus containment. It writes screenshots and `landing-results.json` under ignored `tmp/ui-review/`. URL/debug endpoint overrides use the same `ASTRA_TEST_URL` / `ASTRA_CDP_URL` variables.
 
 Keep `landing-video.mp4` at the repository root: it is imported through Vite and emitted as a hashed media file in `dist/assets`. Keep the extracted still at `public/assets/landing-poster.jpg`. No remote video URL or additional package is required.
+
+## Verification after merge into main
+
+Landing implementation `c64fdff` was fast-forward merged into local `main` at Abbas's request. Fresh checks on the merged checkout passed: all 27 automated tests, TypeScript/Vite production build, and all nine landing browser groups against the production preview under the browser's normal autoplay policy.
+
+An additional disposable-profile merge smoke check passed six workspace groups: required form validation/save/same-date update in per-user storage; record filtering/details/reload persistence; updated dashboard chart; anatomy/front/back/region/radiation controls; emergency paths/restart/handoff/exit; and all five workspace routes at 1440/390/320px in light/dark modes (30 route/theme/width combinations). No page overflow or browser runtime exceptions occurred. Reports are in ignored `tmp/ui-review/landing-results.json` and `tmp/ui-review/merged-workspace-results.json`. These are functional/rendering checks of the current prototype, not medical-content validation.

@@ -8,7 +8,7 @@ Abbas authorized completion of all three feature parts in this session, supersed
 
 This file is the primary checklist. `BUILD_LOG.md` retains architectural decisions and historical work; `RESEARCH_VERIFICATION.md` records source/medical evidence gaps.
 
-**Local software scope is complete.** All eight former feature stubs are implemented. Validation: 27 automated tests, a clean production build, and 13 end-to-end browser groups across both themes and five viewport widths. No browser runtime exceptions or console warnings/errors were observed in the final run. Deployment and the external verification items below remain separate.
+**Local software scope is complete.** All eight former feature stubs are implemented. The landing page is merged into local `main` at `c64fdff`. Post-merge validation: 27 automated tests, production build, nine landing browser groups and six workspace browser groups, with no runtime exceptions. The original 13-group feature validation remains historical; the current merged workspace was checked using its authenticated routes. Deployment and the external verification items below remain separate.
 
 ## Work checklist
 
@@ -16,7 +16,7 @@ This file is the primary checklist. `BUILD_LOG.md` retains architectural decisio
 | --- | --- | --- |
 | Foundation, types, data and storage | Done | Existing contracts and 20 regression tests |
 | Reference-led UI, light/dark mode, larger text | Done | Existing responsive shell and remembered theme |
-| Video landing and crew access | Done | Supplied ISS/Earth video, shared inline login/sign-up, returning-crew actions, themes, mobile layout, pause and reduced-motion/poster fallback on `feature/login-video` |
+| Video landing and crew access | Done; merged into local main | Supplied ISS/Earth video, shared inline login/sign-up, returning-crew actions, themes, mobile layout, pause and reduced-motion/poster fallback; implementation commit `c64fdff` |
 | Daily check-in | Done | Validated form, provenance, all optional vitals, per-item help, save/upsert and confirmed reset |
 | Measurement reminders | Done | Daily date-based cadence from config; device checks stay mission-plan-only |
 | Sources/About | Done | 14 source entries, 21 indicator guides, scope, OSDR context and bundled full MIT notice |
@@ -31,6 +31,9 @@ This file is the primary checklist. `BUILD_LOG.md` retains architectural decisio
 | Deployment | Deferred by user | Complete locally; deploy later |
 
 ## Activity record
+
+- At Abbas's request, committed the reviewed landing page as `c64fdff` and fast-forward merged `feature/login-video` into local `main` without conflicts. Both branches retain the landing implementation. No remote push or deployment was performed.
+- Fresh verification on merged `main`: all 27 automated tests and the production build passed. All nine landing browser groups passed against the built app with the normal browser autoplay policy. Six additional workspace browser groups passed: required validation/save/same-date update; record filter/detail/reload; dashboard chart updates; anatomy/front/back/region/radiation controls; emergency paths/restart/handoff/exit; all five workspace routes at 1440/390/320px in both themes without page overflow. No browser runtime exceptions occurred. Reports are under ignored `tmp/ui-review/landing-results.json` and `tmp/ui-review/merged-workspace-results.json`; checks used only a disposable browser profile.
 
 - Added the video landing page on `feature/login-video`, using Abbas's supplied `landing-video.mp4` (about 4.4 MB, 23.5 seconds, original clip retained). The video is muted and loops; a frame extracted from the same clip provides the static fallback. No external footage or new dependencies were added.
 - Reused the teammate's browser-local crew registration/login/PIN API through a shared `AuthPanel`. Successful login opens the existing dashboard. Added modal Escape/focus containment, corrected its initial-mode handling, and surfaced profile-write/login storage errors. Profile storage and per-crew health records retain their existing contracts.
