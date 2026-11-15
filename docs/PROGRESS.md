@@ -16,6 +16,7 @@ This file is the primary checklist. `BUILD_LOG.md` retains architectural decisio
 | --- | --- | --- |
 | Foundation, types, data and storage | Done | Existing contracts and 20 regression tests |
 | Reference-led UI, light/dark mode, larger text | Done | Existing responsive shell and remembered theme |
+| Video landing and crew access | Done | Supplied ISS/Earth video, shared inline login/sign-up, returning-crew actions, themes, mobile layout, pause and reduced-motion/poster fallback on `feature/login-video` |
 | Daily check-in | Done | Validated form, provenance, all optional vitals, per-item help, save/upsert and confirmed reset |
 | Measurement reminders | Done | Daily date-based cadence from config; device checks stay mission-plan-only |
 | Sources/About | Done | 14 source entries, 21 indicator guides, scope, OSDR context and bundled full MIT notice |
@@ -30,6 +31,12 @@ This file is the primary checklist. `BUILD_LOG.md` retains architectural decisio
 | Deployment | Deferred by user | Complete locally; deploy later |
 
 ## Activity record
+
+- Added the video landing page on `feature/login-video`, using Abbas's supplied `landing-video.mp4` (about 4.4 MB, 23.5 seconds, original clip retained). The video is muted and loops; a frame extracted from the same clip provides the static fallback. No external footage or new dependencies were added.
+- Reused the teammate's browser-local crew registration/login/PIN API through a shared `AuthPanel`. Successful login opens the existing dashboard. Added modal Escape/focus containment, corrected its initial-mode handling, and surfaced profile-write/login storage errors. Profile storage and per-crew health records retain their existing contracts.
+- Landing keeps the requested typography and light-blue actions, with theme-aware login cards and a responsive stacked mobile layout. It skips loading video initially for reduced motion, offers explicit play/pause, pauses in hidden tabs, and keeps the login usable if media fails.
+- Added `scripts/landing-check.mjs` for disposable-profile checks of media, authentication, layout/type sizes, themes, reduced motion, media failure and shared modal access. Build and all 27 existing automated tests pass. Deployment remains deferred. Abbas subsequently authorized committing the landing change and merging it into local `main`, followed by fresh regression checks; no remote push is requested.
+- Landing validation completed: all nine browser groups pass, including ten theme/viewport combinations and keyboard focus/Escape in the modal. No runtime exceptions occurred. A separate fresh-browser check confirmed that the built MP4 and poster are served and muted video autoplays under the normal browser policy. Screenshots and reports are under ignored `tmp/ui-review/`.
 
 - Typography updated to Abbas's explicit scale: 18px body/inputs, 22px card headings, 17px navigation/buttons, 16px supporting text/footnotes, 14–15px badges/chart labels. Page titles remain 30–40px. Production build passes; computed sizes and all-page layout verified at seven widths (320–1440px) in both themes, with no overflow, header overlap or runtime exceptions.
 

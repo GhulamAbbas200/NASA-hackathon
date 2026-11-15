@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Environment } from '../types';
 import {
   getRegisteredAstronauts,
@@ -16,11 +16,45 @@ export interface AuthModalProps {
 }
 
 export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'login' }: AuthModalProps) {
+  const dialog = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!isOpen) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const controls = () => Array.from(dialog.current?.querySelectorAll<HTMLElement>('button, input, select, a[href]') ?? []).filter(el => !el.hasAttribute('disabled'));
+    controls()[0]?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+      if (event.key !== 'Tab') return;
+      const items = controls();
+      const first = items[0], last = items.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKey);
+      previous?.focus();
+    };
+  }, [isOpen, onClose]);
+  if (!isOpen) return null;
+  return <div className="modal-backdrop" onClick={onClose}>
+    <div ref={dialog} className="modal-card panel" role="dialog" aria-modal="true" aria-labelledby="auth-title" onClick={e => e.stopPropagation()}>
+      <AuthPanel key={initialMode} onSuccess={onSuccess} onClose={onClose} initialMode={initialMode} />
+    </div>
+  </div>;
+}
+
+/** The same crew-profile flow is used inline on Home and in workspace dialogs. */
+export function AuthPanel({ onClose, onSuccess, initialMode = 'login' }: {
+  onClose?: () => void;
+  onSuccess: (user: AstronautProfile) => void;
+  initialMode?: 'login' | 'signup';
+}) {
   const [users, setUsers] = useState<AstronautProfile[]>(getRegisteredAstronauts);
-  const [mode, setMode] = useState<'login' | 'signup'>(() => {
-    // If no profiles exist, always start on signup
-    return users.length === 0 ? 'signup' : initialMode;
-  });
+  const [mode, setMode] = useState<'login' | 'signup'>(initialMode);
   const [selectedUserId, setSelectedUserId] = useState<string>(() => users[0]?.id ?? '');
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
@@ -29,23 +63,23 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
   // Signup form fields
   const [name, setName] = useState('');
   const [callsign, setCallsign] = useState('');
-  const [role, setRole] = useState('Mission Specialist');
+  const [role, setRole] = useState('Mission Commander');
   const [environment, setEnvironment] = useState<Environment>('iss');
   const [avatar, setAvatar] = useState('orbit');
   const [signupPin, setSignupPin] = useState('');
 
-  if (!isOpen) return null;
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    const res = loginAstronaut(selectedUserId, pin || undefined);
+    let res;
+    try { res = loginAstronaut(selectedUserId, pin || undefined); }
+    catch { setError('Could not access browser storage. Allow local storage to log in.'); return; }
     if (!res.success || !res.user) {
       setError(res.error || 'Login failed.');
       return;
     }
     onSuccess(res.user);
-    onClose();
+    onClose?.();
   };
 
   const handleSignup = (e: React.FormEvent) => {
@@ -56,14 +90,17 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
       setError('Please enter your name.');
       return;
     }
-    const newUser = registerAstronaut({
-      name: name.trim(),
-      callsign: callsign.trim() || 'Crew-Lead',
-      role: role || 'Flight Specialist',
-      environment,
-      avatar,
-      pin: signupPin,
-    });
+    let newUser: AstronautProfile;
+    try {
+      newUser = registerAstronaut({
+        name: name.trim(),
+        callsign: callsign.trim() || 'Crew-Lead',
+        role: role || 'Flight Specialist',
+        environment,
+        avatar,
+        pin: signupPin,
+      });
+    } catch { setError('Could not save your profile. Check browser storage and try again.'); return; }
     const updatedUsers = getRegisteredAstronauts();
     setUsers(updatedUsers);
     setSelectedUserId(newUser.id);
@@ -76,26 +113,26 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
   };
 
   return (
-    <div className="modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
-      <div className="modal-card panel" onClick={e => e.stopPropagation()}>
+    <div className="auth-panel">
         <div className="modal-header">
           <div className="card-heading">
             <span className="card-icon"><Icon name="user" size={24} /></span>
-            <h2>{mode === 'login' ? 'Astronaut Log In' : 'New Crew Sign-Up'}</h2>
+            <h2 id="auth-title">{mode === 'login' ? 'Welcome aboard.' : 'Join the crew.'}</h2>
           </div>
-          <button type="button" className="close-btn" onClick={onClose} aria-label="Close modal">✕</button>
+          {onClose && <button type="button" className="close-btn" onClick={onClose} aria-label="Close modal">✕</button>}
         </div>
 
         <p className="secondary-text">
           {mode === 'login'
-            ? 'Select your crew profile to access your private daily health records.'
-            : 'Register your astronaut profile to start tracking your personalized health baselines.'}
+            ? 'Your next check-in starts here.'
+            : 'Create a local profile for your mission records.'}
         </p>
 
-        <div className="tab-buttons" role="tablist">
+        <div className="tab-buttons" aria-label="Profile access">
           <button
             type="button"
             className={mode === 'login' ? 'tab-btn active' : 'tab-btn'}
+            aria-pressed={mode === 'login'}
             onClick={() => { setMode('login'); setError(''); setSuccessNotice(''); }}
           >
             <Icon name="user" size={16} /> Log In
@@ -103,6 +140,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
           <button
             type="button"
             className={mode === 'signup' ? 'tab-btn active' : 'tab-btn'}
+            aria-pressed={mode === 'signup'}
             onClick={() => { setMode('signup'); setError(''); setSuccessNotice(''); }}
           >
             <Icon name="sparkles" size={16} /> Sign Up
@@ -125,9 +163,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
           users.length === 0 ? (
             <div className="empty-state" style={{ textAlign: 'center', padding: '24px 16px' }}>
               <Icon name="user" size={36} />
-              <h3 style={{ marginTop: 12 }}>No crew profiles registered yet</h3>
+              <h3 style={{ marginTop: 12 }}>First time on board?</h3>
               <p className="secondary-text">
-                Create your astronaut profile to get started with your personal mission records.
+                Create a crew profile on this device to get started.
               </p>
               <button
                 type="button"
@@ -140,31 +178,18 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
             </div>
           ) : (
             <form onSubmit={handleLogin} className="auth-form">
-              <label className="field-label" htmlFor="astronaut-select">Select Astronaut Profile</label>
-              <div className="crew-picker-grid">
-                {users.map(u => (
-                  <button
-                    key={u.id}
-                    type="button"
-                    className={`crew-picker-item ${selectedUserId === u.id ? 'selected' : ''}`}
-                    onClick={() => { setSelectedUserId(u.id); setPin(''); setError(''); }}
-                  >
-                    <span className="crew-picker-avatar"><Icon name={(u.avatar as any) || 'orbit'} size={24} /></span>
-                    <div className="crew-picker-info">
-                      <strong>{u.name}</strong>
-                      <span>{u.callsign} · {u.role}</span>
-                    </div>
-                    {selectedUserId === u.id && <span className="selected-check"><Icon name="check" size={16} /></span>}
-                  </button>
-                ))}
-              </div>
+              <label className="field-label" htmlFor="astronaut-select">Crew profile</label>
+              <select id="astronaut-select" value={selectedUserId} onChange={e => { setSelectedUserId(e.target.value); setPin(''); setError(''); }}>
+                {users.map(u => <option key={u.id} value={u.id}>{u.name} · {u.callsign}</option>)}
+              </select>
 
               {users.find(u => u.id === selectedUserId)?.pin && (
                 <div className="form-field" style={{ marginTop: 14 }}>
-                  <label htmlFor="login-pin">4-Digit PIN / Passcode</label>
+                  <label htmlFor="login-pin">PIN / Passcode</label>
                   <input
                     id="login-pin"
                     type="password"
+                    autoComplete="current-password"
                     maxLength={6}
                     value={pin}
                     onChange={e => setPin(e.target.value)}
@@ -240,10 +265,11 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
                 </select>
               </div>
               <div className="form-field">
-                <label htmlFor="reg-pin">4-Digit PIN (Optional)</label>
+                <label htmlFor="reg-pin">PIN (Optional)</label>
                 <input
                   id="reg-pin"
                   type="password"
+                  autoComplete="new-password"
                   maxLength={6}
                   value={signupPin}
                   onChange={e => setSignupPin(e.target.value)}
@@ -263,7 +289,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'l
             </div>
           </form>
         )}
-      </div>
+      <p className="auth-local-note"><Icon name="info" size={17} /> Profiles and records stay in this browser. They do not sync between devices.</p>
     </div>
   );
 }

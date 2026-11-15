@@ -8,7 +8,7 @@ import { assessCheckIns, orderedEntries } from './lib/baseline';
 import { RULE_NOTICE } from './lib/rules';
 import { createUserStorage } from './lib/storage';
 import { getActiveAstronaut, logoutAstronaut, type AstronautProfile } from './lib/auth';
-import Home from './components/Home';
+import Landing from './components/Landing';
 import AuthModal from './components/AuthModal';
 import CheckInForm from './components/CheckInForm';
 import Dashboard from './components/Dashboard';
@@ -159,11 +159,11 @@ export default function App() {
   );
 
   return (
-    <div className="app-shell">
+    <div className={page === 'home' ? 'app-shell landing-shell' : 'app-shell'}>
       <a href="#main" className="skip-link">Skip to content</a>
 
       {/* Top Navigation Bar: Only Home, About, Start Check-in, and Login/Profile */}
-      <header className="topbar">
+      {page !== 'home' && <header className="topbar">
         <div className="brand-group">
           {currentUser && (
             <button
@@ -185,7 +185,6 @@ export default function App() {
         <nav className="nav-center" aria-label="Main navigation">
           <a
             href="#home"
-            aria-current={page === 'home' ? 'page' : undefined}
           >
             <Icon name="orbit" size={16} />
             <span>Home</span>
@@ -241,7 +240,7 @@ export default function App() {
             </button>
           )}
         </div>
-      </header>
+      </header>}
 
       {/* Main Content Area */}
       <main id="main" tabIndex={-1} className="main-content">
@@ -435,12 +434,13 @@ export default function App() {
           /* Public / Standalone Views: Home and About */
           <div className="public-content-container">
             {page === 'home' && (
-              <Home
+              <Landing
                 currentUser={currentUser}
                 entries={records.entries}
                 environment={environment}
                 onStartCheckIn={handleStartCheckIn}
-                onOpenAuth={mode => setAuthModal({ open: true, mode: mode || 'login' })}
+                onAuthSuccess={handleAuthSuccess}
+                onLogout={handleLogout}
               />
             )}
 
@@ -450,7 +450,7 @@ export default function App() {
       </main>
 
       {/* Comprehensive Spaceflight Footer */}
-      <footer className="app-footer">
+      {page !== 'home' && <footer className="app-footer">
         <div className="footer-top-grid">
           {/* Column 1: ASTRA Identity & Offline Status */}
           <div className="footer-col footer-brand-section">
@@ -561,7 +561,7 @@ export default function App() {
             </button>
           </div>
         </div>
-      </footer>
+      </footer>}
 
       {/* Auth Modal for Sign Up & Log In */}
       <AuthModal

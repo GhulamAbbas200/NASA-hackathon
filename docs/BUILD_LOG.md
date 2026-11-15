@@ -104,7 +104,15 @@
 - Updated shared theme tokens and feature-specific overrides, including form help, tables, region units, source notes, model controls and chart axes. Increased axis spacing for larger tick text.
 - Validation: production build passed. Browser checked the exact computed sizes on all five pages in both themes at 1440, 1280, 1201, 1024, 768, 390 and 320px (14 layout combinations). No horizontal page overflow, header overlap or runtime exceptions observed. Screenshot/type reports are under ignored `tmp/ui-review/`; no medical/data behavior changed.
 
-## Proposed changes
+## 14. ISS video landing and shared crew access
+- Abbas supplied `landing-video.mp4` and authorized implementation on the already-created `feature/login-video` branch, after merging teammate enhancements. Original file is about 4.4 MB and 23.5 seconds; retain the supplied duration and let Vite bundle it as a media asset.
+- Added a full-width landing composition: ASTRA introduction left, the existing crew-profile login/sign-up flow right, and a compact decision-support notice. Dark video overlays preserve readable text; the light-blue controls and requested type scale remain. Theme changes affect the access card; the video backdrop stays dark for readability.
+- Extracted the teammate's auth UI into a shared `AuthPanel` within `AuthModal.tsx`, reused by the landing. Keep existing local profile/PIN and per-user check-in storage behavior. Corrected modal mode initialization on open; added Escape, focus containment/restoration and explicit storage-error feedback.
+- Added muted/inline/looping video, play/pause, hidden-tab pause, reduced-motion opt-in and poster/failure fallback. `public/assets/landing-poster.jpg` is a still frame at roughly two seconds from the supplied video, not a separately sourced image.
+- Added a dedicated browser check script for media and crew access, responsive layout and exact type sizes in both themes, reduced motion, fallback and modal reuse. No dependencies, numerical health rules, dashboard layout or backend added. Deployment remains deferred. Following review, Abbas authorized a local commit and merge into `main` with fresh regression checks; no remote push is requested.
+- Validation complete: all 27 automated tests and production build pass; all nine landing browser groups pass with no runtime exceptions. Checked five widths (320–1440px) in both themes, signup/login/PIN/returning-crew paths and modal keyboard behavior. A separate fresh browser confirmed bundled MP4/poster delivery and muted autoplay under normal browser policy. Inspected desktop/mobile screenshots; reports remain ignored under `tmp/ui-review/`.
+
+## Proposed changes (historical)
 - Accepted by Abbas's reference request: use the light anatomy-centered dashboard instead of the original dark sidebar shell. Keep the original stack, data and three-part feature split.
 
 ## Unverified items
@@ -114,4 +122,4 @@
 - TODO: verify inaccessible historical radiation PDF and lumbar ultrasound report if those detailed claims are needed. Neither is asserted as current evidence.
 - TODO: verify OSDR-310/351 full metadata and terms before analysis; NASA article confirms relevance only. No dataset analysis/import was performed.
 - TODO: verify additional exact react-body-map wrapper copyright notice (MIT declaration and original drawing notice retained).
-- Browser visual/interaction QA and final feature integration remain for the feature tasks. Automated and HTTP smoke results are recorded above.
+- Original feature integration and browser QA are recorded in sections 11–13; landing verification after the teammate's auth changes is recorded in section 14. The original browser harness predates the authenticated routes and needs adaptation for that new workspace navigation.

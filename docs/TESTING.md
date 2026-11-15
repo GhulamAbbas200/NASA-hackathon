@@ -54,3 +54,20 @@ The browser pass covers 13 groups:
 Also checked: no browser runtime exceptions or console errors/warnings in the completed pass. Desktop/mobile screenshots were visually inspected. Browser checks are not a complete manual accessibility audit, clinical validation, proof of current hardware availability, or proof of a fresh offline installation. There is no service worker.
 
 Stop the preview with Ctrl+C when finished and close the isolated headless Chrome instance. Browser testing/deployment do not alter the normal user's stored records.
+
+## Video landing checks after teammate authentication changes
+
+`scripts/landing-check.mjs` exercises the current public landing and shared crew-profile flow. It **creates/removes profiles only in the disposable test browser**. The earlier 13-group harness above records the original complete-app validation and predates the teammate's authenticated routes/sidebar; it needs adaptation before it can run unchanged against those routes.
+
+Start `npm.cmd run preview -- --host 127.0.0.1 --port 5183 --strictPort` after building (or use the same flags with `run dev` while developing). Launch an isolated Chrome instance, then run:
+
+```powershell
+$astraLandingProfile = Join-Path $env:TEMP 'astra-landing-browser-tests'
+$astraLandingArgs = @('--headless=new', '--disable-gpu', '--no-first-run', '--remote-debugging-port=9236', ('--user-data-dir="' + $astraLandingProfile + '"'), 'http://127.0.0.1:5183/')
+Start-Process -FilePath 'C:\Program Files\Google\Chrome\Application\chrome.exe' -ArgumentList $astraLandingArgs -WindowStyle Hidden
+node scripts/landing-check.mjs
+```
+
+The script checks actual video decoding/muted looping, pause/resume, the poster asset, first-profile registration, incorrect/correct PIN login, dashboard handoff, returning-crew actions, logout/persistence, theme persistence, five widths in both themes, exact requested fonts, mobile signup, reduced-motion loading/explicit-play/preference updates, blocked-video fallback and shared modal login/Escape/focus containment. It writes screenshots and `landing-results.json` under ignored `tmp/ui-review/`. URL/debug endpoint overrides use the same `ASTRA_TEST_URL` / `ASTRA_CDP_URL` variables.
+
+Keep `landing-video.mp4` at the repository root: it is imported through Vite and emitted as a hashed media file in `dist/assets`. Keep the extracted still at `public/assets/landing-poster.jpg`. No remote video URL or additional package is required.

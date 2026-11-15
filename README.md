@@ -11,7 +11,9 @@ npm install
 npm run dev
 ```
 
-Open the Local URL printed by Vite. In PowerShell, if `npm.ps1` is blocked by execution policy, use `npm.cmd install` and `npm.cmd run dev` (same for other scripts). No environment variables, account, API key or backend are needed.
+Open the Local URL printed by Vite. In PowerShell, if `npm.ps1` is blocked by execution policy, use `npm.cmd install` and `npm.cmd run dev` (same for other scripts). No environment variables, remote account, API key or backend are needed.
+
+The Home page uses the supplied `landing-video.mp4` as a muted, looping backdrop, with a still-image fallback and play/pause control. Create a crew profile in the landing card, then log in to enter the dashboard. These are browser-local profiles with an optional PIN; they do not sync between devices or create a remote account. Light/dark mode and the larger type scale are retained. Reduced-motion settings start with the still image instead of loading video.
 
 ```sh
 npm test
@@ -27,7 +29,7 @@ Start with [done/remaining progress](docs/PROGRESS.md), [the original handoff](d
 - [Part 2 — Dashboard and Emergency UI](docs/tasks/part-2-dashboard.md)
 - [Part 3 — Body map, integration and deploy](docs/tasks/part-3-bodymap.md)
 
-Five hash routes: Check-in, Dashboard (labelled Overview), Body map, Emergency, About. Anatomy hotspots and labelled buttons select live region insights; actual front/back SVG models support mouse selection and equivalent keyboard controls. Charts read the saved values and provide dated table alternatives. Emergency follows the sourced graph with per-step limits. The environment selector keeps ISS primary and clearly marks spacecraft/Moon base as conceptual; it does not invent hardware or schedules for those environments.
+Seven hash routes: Home, Dashboard, Check-in, Body map, Records, Emergency and About. Teammate enhancements added local crew access and sidebar navigation for the workspace. Anatomy hotspots and labelled buttons select live region insights; actual front/back SVG models support mouse selection and equivalent keyboard controls. Charts read the saved values and provide dated table alternatives. Emergency follows the sourced graph with per-step limits. The environment selector keeps ISS primary and clearly marks spacecraft/Moon base as conceptual; it does not invent hardware or schedules for those environments.
 
 All demo entries are **simulated**, not NASA astronaut data or OSDR records. A missing storage key loads the simulated demo; reset writes an empty dataset that stays empty on reload. `Storage.save` upserts a date and can throw on invalid data or browser storage failures.
 
@@ -35,4 +37,4 @@ Baseline compares latest with the **seven preceding entries**. All numerical fla
 
 Research and measurement/action gaps remain visible as `TODO: verify` in the data. See [source verification](docs/RESEARCH_VERIFICATION.md) and [third-party notices](THIRD_PARTY_NOTICES.md). The installed body package uses `data` and `onBodyPartPress`; its README example is stale. Both selectable head paths exist.
 
-Full implementation branch: `feature/complete-app`, based on the earlier `feature/foundation`. Abbas authorized completing all three parts together. No GitHub remote is configured, and nothing has been pushed or published. **Deployment is deferred by the user's choice.** See `docs/PROGRESS.md` for implemented work and the remaining external verification items.
+The original complete implementation is on `feature/complete-app`, based on `feature/foundation`. Abbas subsequently published the GitHub repository and merged the team's `enhancements` branch into `main`. Video landing development is on `feature/login-video`; Abbas authorized committing it and merging into local `main`, followed by regression checks. No remote push or deployment is included in this pass. **Deployment remains deferred by the user's choice.** See `docs/PROGRESS.md` for implemented work and remaining verification items.
