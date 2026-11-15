@@ -36,10 +36,11 @@ export function isCheckIn(value: unknown): value is CheckIn {
 export function createLocalStorage(
   getDriver: () => Pick<globalThis.Storage, 'getItem' | 'setItem'>,
   initialEntries: readonly CheckIn[] = [],
+  storageKey: string = STORAGE_KEY,
 ): Storage {
   const load = (): CheckIn[] => {
     try {
-      const raw = getDriver().getItem(STORAGE_KEY);
+      const raw = getDriver().getItem(storageKey);
       if (raw === null) return structuredClone([...initialEntries]);
       const parsed: unknown = JSON.parse(raw);
       if (!object(parsed) || parsed.version !== 1 || !Array.isArray(parsed.entries) || !parsed.entries.every(isCheckIn)) {
@@ -51,7 +52,7 @@ export function createLocalStorage(
     }
   };
   const write = (entries: CheckIn[]) => {
-    try { getDriver().setItem(STORAGE_KEY, JSON.stringify({ version: 1, entries })); }
+    try { getDriver().setItem(storageKey, JSON.stringify({ version: 1, entries })); }
     catch (cause) { throw new StorageError('Could not save ASTRA records. Storage may be blocked or full.', { cause }); }
   };
   return {
@@ -62,6 +63,15 @@ export function createLocalStorage(
     },
     reset() { write([]); },
   };
+}
+
+export function getUserStorageKey(userId?: string | null): string {
+  return userId ? `astra.check-ins.v1.${userId}` : STORAGE_KEY;
+}
+
+export function createUserStorage(userId?: string | null): Storage {
+  const key = getUserStorageKey(userId);
+  return createLocalStorage(() => window.localStorage, [], key);
 }
 
 /** No browser access until a method is called; safe to import in tests. */

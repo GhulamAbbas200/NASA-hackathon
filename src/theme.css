@@ -43,11 +43,11 @@ body { font-size: var(--font-body); background: radial-gradient(ellipse at 0 0, 
 button { font-size: var(--font-control); }
 .app-shell { color: var(--text-primary); background: var(--shell-bg); border-color: var(--border-soft); }
 .topbar { grid-template-columns: auto minmax(0, 1fr) auto; border-color: var(--border-soft); }
-nav { justify-self: center; }
+nav:not(.sidebar-nav) { justify-self: center; }
 .theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; white-space: nowrap; }
 .header-actions { gap: 10px; }
 .emergency-button { min-height: 44px; justify-content: center; }
-nav a { font-size: var(--font-control); min-height: 44px; scroll-margin-inline: 6px; }
+nav:not(.sidebar-nav) a { font-size: var(--font-control); min-height: 44px; scroll-margin-inline: 6px; }
 .emergency-button, .theme-toggle { font-size: var(--font-control); }
 .breadcrumb, .workspace-caption, .foundation-badge, .notice, .crew-card-identity p, .crew-card-bottom { font-size: var(--font-small); }
 h1 { font-size: clamp(1.875rem, 2.7vw, 2.5rem); letter-spacing: -.04em; }
@@ -75,11 +75,11 @@ footer { font-size: var(--font-small); }
 
 /* Explicit dark surfaces keep the existing semantic accent colors legible. */
 [data-theme="dark"] .topbar { background: #11182af7; }
-[data-theme="dark"] .panel, [data-theme="dark"] nav { background: var(--surface-bg); border-color: var(--border-color); }
+[data-theme="dark"] .panel, [data-theme="dark"] nav:not(.sidebar-nav) { background: var(--surface-bg); border-color: var(--border-color); }
 [data-theme="dark"] .brand, [data-theme="dark"] .breadcrumb > span:nth-child(3) { color: var(--text-primary); }
-[data-theme="dark"] nav a { color: var(--text-secondary); }
-[data-theme="dark"] nav a:hover { background: var(--accent-soft); color: var(--accent-text); }
-[data-theme="dark"] nav a[aria-current="page"] { color: #101d3f; background: var(--accent-blue); }
+[data-theme="dark"] nav:not(.sidebar-nav) a { color: var(--text-secondary); }
+[data-theme="dark"] nav:not(.sidebar-nav) a:hover { background: var(--accent-soft); color: var(--accent-text); }
+[data-theme="dark"] nav:not(.sidebar-nav) a[aria-current="page"] { color: #101d3f; background: var(--accent-blue); }
 [data-theme="dark"] .breadcrumb, [data-theme="dark"] .workspace-caption,
 [data-theme="dark"] .page-heading p, [data-theme="dark"] .panel .placeholder-description,
 [data-theme="dark"] .crew-card-identity p, [data-theme="dark"] .crew-context-line > span,
@@ -107,7 +107,7 @@ footer { font-size: var(--font-small); }
 @media (max-width: 1200px) {
   .topbar { grid-template-columns: minmax(0, 1fr) auto; }
   .header-actions { grid-column: 2; grid-row: 1; }
-  nav { grid-row: 2; grid-column: 1 / -1; width: auto; }
+  nav:not(.sidebar-nav) { grid-row: 2; grid-column: 1 / -1; width: auto; }
 }
 @media (max-width: 1100px) {
   .overview-grid { grid-template-columns: minmax(220px, 1fr) minmax(300px, 1.6fr); }
@@ -115,8 +115,8 @@ footer { font-size: var(--font-small); }
   .insights-column > .stack, .insights-column .panel-grid { display: contents; }
 }
 @media (max-width: 700px) {
-  nav { display: flex; overflow-x: auto; justify-self: stretch; justify-content: flex-start; width: 100%; max-width: 100%; padding: 5px; border-radius: 18px; }
-  nav a { flex-shrink: 0; font-size: var(--font-control); padding: 10px 14px; }
+  nav:not(.sidebar-nav) { display: flex; overflow-x: auto; justify-self: stretch; justify-content: flex-start; width: 100%; max-width: 100%; padding: 5px; border-radius: 18px; }
+  nav:not(.sidebar-nav) a { flex-shrink: 0; font-size: var(--font-control); padding: 10px 14px; }
   .topbar { gap: 12px; }
   .theme-toggle-label { display: none; }
   .theme-toggle { width: 44px; padding: 10px; }
