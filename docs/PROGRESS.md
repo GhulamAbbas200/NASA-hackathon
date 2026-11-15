@@ -32,6 +32,8 @@ This file is the primary checklist. `BUILD_LOG.md` retains architectural decisio
 
 ## Activity record
 
+- Required PIN follow-up: signup now requires a nonblank PIN in the shared landing/modal form and in `registerAstronaut`. Missing, empty and whitespace-only PINs are rejected before writing a profile. Existing saved profiles retain compatibility. Validation passed: 29 automated tests, production build and all nine landing browser groups, including blank/whitespace signup rejection and successful PIN login. Updated locally on `main`; this follow-up is uncommitted and has not been pushed.
+
 - At Abbas's request, committed the reviewed landing page as `c64fdff` and fast-forward merged `feature/login-video` into local `main` without conflicts. Both branches retain the landing implementation. No remote push or deployment was performed.
 - Fresh verification on merged `main`: all 27 automated tests and the production build passed. All nine landing browser groups passed against the built app with the normal browser autoplay policy. Six additional workspace browser groups passed: required validation/save/same-date update; record filter/detail/reload; dashboard chart updates; anatomy/front/back/region/radiation controls; emergency paths/restart/handoff/exit; all five workspace routes at 1440/390/320px in both themes without page overflow. No browser runtime exceptions occurred. Reports are under ignored `tmp/ui-review/landing-results.json` and `tmp/ui-review/merged-workspace-results.json`; checks used only a disposable browser profile.
 

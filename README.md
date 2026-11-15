@@ -13,7 +13,7 @@ npm run dev
 
 Open the Local URL printed by Vite. In PowerShell, if `npm.ps1` is blocked by execution policy, use `npm.cmd install` and `npm.cmd run dev` (same for other scripts). No environment variables, remote account, API key or backend are needed.
 
-The Home page uses the supplied `landing-video.mp4` as a muted, looping backdrop, with a still-image fallback and play/pause control. Create a crew profile in the landing card, then log in to enter the dashboard. These are browser-local profiles with an optional PIN; they do not sync between devices or create a remote account. Light/dark mode and the larger type scale are retained. Reduced-motion settings start with the still image instead of loading video.
+The Home page uses the supplied `landing-video.mp4` as a muted, looping backdrop, with a still-image fallback and play/pause control. Create a crew profile in the landing card with a required PIN, then log in to enter the dashboard. These are browser-local profiles; they do not sync between devices or create a remote account. Light/dark mode and the larger type scale are retained. Reduced-motion settings start with the still image instead of loading video.
 
 ```sh
 npm test

@@ -90,6 +90,11 @@ export function AuthPanel({ onClose, onSuccess, initialMode = 'login' }: {
       setError('Please enter your name.');
       return;
     }
+    if (!signupPin.trim()) {
+      setError('Please enter a PIN.');
+      document.getElementById('reg-pin')?.focus();
+      return;
+    }
     let newUser: AstronautProfile;
     try {
       newUser = registerAstronaut({
@@ -265,11 +270,12 @@ export function AuthPanel({ onClose, onSuccess, initialMode = 'login' }: {
                 </select>
               </div>
               <div className="form-field">
-                <label htmlFor="reg-pin">PIN (Optional)</label>
+                <label htmlFor="reg-pin">PIN (Required)</label>
                 <input
                   id="reg-pin"
                   type="password"
                   autoComplete="new-password"
+                  required
                   maxLength={6}
                   value={signupPin}
                   onChange={e => setSignupPin(e.target.value)}

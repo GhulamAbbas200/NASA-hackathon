@@ -87,8 +87,11 @@ export function registerAstronaut(data: {
   role: string;
   environment?: Environment;
   avatar?: string;
-  pin?: string;
+  pin: string;
 }): AstronautProfile {
+  if (typeof data.pin !== 'string' || !data.pin.trim()) {
+    throw new Error('Please enter a PIN.');
+  }
   const users = getRegisteredAstronauts();
   const slug = data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'astronaut';
   const id = `${slug}-${Date.now().toString(36)}`;
@@ -99,7 +102,7 @@ export function registerAstronaut(data: {
     role: data.role.trim() || 'Flight Specialist',
     environment: data.environment || 'iss',
     avatar: data.avatar || 'orbit',
-    pin: data.pin?.trim() || '',
+    pin: data.pin.trim(),
     createdAt: new Date().toISOString(),
   };
 

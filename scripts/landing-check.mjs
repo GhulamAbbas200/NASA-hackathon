@@ -90,7 +90,15 @@ try {
 
   assert.match(await evaluate('document.querySelector(".auth-panel").textContent'), /First time on board/);
   await click('Create Profile Now');
-  await setValue('#reg-name', 'Landing Test Crew'); await setValue('#reg-callsign', 'ORBIT-01'); await setValue('#reg-pin', '1234');
+  await setValue('#reg-name', 'Landing Test Crew'); await setValue('#reg-callsign', 'ORBIT-01');
+  assert.ok(await evaluate('document.querySelector("#reg-pin").required'));
+  await click('Create Astronaut Profile');
+  assert.equal(await evaluate('localStorage.getItem("astra.auth.users.v1")'), null);
+  assert.ok(await evaluate('document.querySelector("#reg-pin").validity.valueMissing'));
+  await setValue('#reg-pin', '   '); await click('Create Astronaut Profile');
+  assert.match(await evaluate('document.querySelector(".form-error-summary").textContent'), /Please enter a PIN/);
+  assert.equal(await evaluate('localStorage.getItem("astra.auth.users.v1")'), null);
+  await setValue('#reg-pin', '1234');
   await click('Create Astronaut Profile');
   assert.ok(await evaluate('!!document.querySelector(".auth-success-banner")'));
   assert.equal(await evaluate('JSON.parse(localStorage.getItem("astra.auth.users.v1")).length'), 1);

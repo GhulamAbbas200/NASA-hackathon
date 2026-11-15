@@ -9,7 +9,7 @@ npm.cmd test
 npm.cmd run build
 ```
 
-The suite has 27 tests: indicator/rule/reminder coverage, emergency graph/source integrity, installed package slugs/rendering/callback, prior-seven baseline comparison and persistence, missing data, check-in parsing/scales/provenance/optional values, same-date save, reminders, and storage corruption/quota/reset behavior.
+The suite has 29 tests: indicator/rule/reminder coverage, emergency graph/source integrity, installed package slugs/rendering/callback, prior-seven baseline comparison and persistence, missing data, check-in parsing/scales/provenance/optional values, same-date save, reminders, storage corruption/quota/reset behavior, required signup PIN rejection without profile writes, and PIN login for newly registered profiles.
 
 No medical rule values were changed. Form bounds represent input scales and formats, not clinical normal ranges.
 
